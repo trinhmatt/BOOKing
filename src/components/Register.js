@@ -11,7 +11,7 @@ const Register = (props) => (
         .then( (user) => {
           user.updateProfile({displayName: formUser.username})
             .then( () => {
-              props.history.push('/redirect')
+              props.history.push('/register/success')
             })
             .catch( (error) => {
               const errorCode = error.code;
