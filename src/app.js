@@ -8,6 +8,7 @@ import 'normalize.css/normalize.css'
 import 'react-dates/lib/css/_datepicker.css'
 import { firebase } from './firebase/firebase'
 import { logIn, logOut } from './actions/auth'
+import { startGetSettings } from './actions/users'
 
 const store = configureStore();
 
@@ -22,8 +23,10 @@ let hasRendered = false;
 
 const renderApp = () => {
   if (!hasRendered) {
-    ReactDOM.render(jsx, document.getElementById('app'));
-    hasRendered = true;
+    store.dispatch(startGetSettings()).then( () => {
+      ReactDOM.render(jsx, document.getElementById('app'));
+      hasRendered = true;
+    })
   }
 };
 
@@ -34,10 +37,9 @@ firebase.auth().onAuthStateChanged( (user) => {
     store.dispatch(logIn(user.uid, user.displayName))
     renderApp()
     if (history.location.pathname === '/') {
-      history.push('/dashboard')
+      history.push(`/${user.uid}/dashboard`)
     }
   } else {
     renderApp();
-    // history.push('/')
   }
 })

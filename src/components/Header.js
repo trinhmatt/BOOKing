@@ -13,11 +13,13 @@ class Header extends React.Component {
       activeItem: '',
       auth: props.auth,
       startLogOut: props.startLogOut,
-      history: props.history
+      history: props.history,
+      match: props.match
     }
   }
   onHomeClick = (e, {name}) => {
-    this.setState(() => ({activeItem: name}), this.state.history.push('/dashboard'))
+    const uid = this.state.match.params.uid
+    this.setState(() => ({activeItem: name}), this.state.history.push(`/${uid}/dashboard`))
   }
   onCreateClick = (e, {name}) => {
     this.setState(() => ({activeItem: name}), this.state.history.push('/create'))
@@ -29,7 +31,7 @@ class Header extends React.Component {
         <Menu className='nav-header' color={'teal'} inverted size='massive' stackable compact>
           <Menu.Item name='Home' active={activeItem === 'home'} onClick={this.onHomeClick}/>
           <Menu.Item name='Create Survey' active={activeItem === 'create'} onClick={this.onCreateClick}/>
-          <p id='header-brand'>CensUS.</p>
+          <p id='header-brand'></p>
           <Menu.Menu position='right'>
             {!this.state.auth.uid ? <Button primary>Sign Up</Button>
               : <Dropdown item text={this.state.auth.displayName || 'Anonymous'}>

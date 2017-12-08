@@ -16,9 +16,9 @@ const AppRouter = () => (
   <Router history={history}>
     <div>
       <Switch>
-        <PublicRoute path='/' component={Login} exact={true} />
-        <PublicRoute path='/dashboard' component={Dashboard} />
-        <PublicRoute path='/booking/:year/:month/:day' component={CreateBooking} />
+        <Route path='/' component={Login} exact={true} />
+        <PublicRoute path='/:uid/dashboard' component={Dashboard} exact={true}/>
+        <PublicRoute path='/:uid/booking/:year/:month/:day' component={CreateBooking} />
         <Route path='/register' component={Register} exact={true}/>
         <PrivateRoute path='/register/success' component={RegisterSuccess} />
         <Redirect from='/redirect' to='/dashboard' />

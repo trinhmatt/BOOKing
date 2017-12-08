@@ -1,12 +1,14 @@
 import React from 'react'
-import moment from 'moment'
 import TimeBlock from './TimeBlock'
+import { connect } from 'react-redux'
+
 
 const CreateBooking = (props) => (
   <div>
     <h1>Create booking</h1>
-    <TimeBlock />
+    <TimeBlock uid={props.match.params.uid} />
   </div>
 )
 
-export default CreateBooking;
+
+export default connect()(CreateBooking);

@@ -12,8 +12,10 @@ export default (state = {}, action) => {
       }
       return {
         ...state,
-        [action.uid]: newUserSettings 
+        [action.uid]: newUserSettings
       }
+    case 'GET_SETTINGS':
+      return {...action.settings}
     default:
       return state;
   }
