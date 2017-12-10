@@ -1,0 +1,39 @@
+.first-half-hour input:not(old) + label {
+  display      : inline-block;
+  margin-left  : 1rem;
+  margin-bottom: 1rem;
+}
+
+.second-half-hour input:not(old) + label {
+  display      : inline-block;
+  margin-left  : 2rem;
+  margin-bottom: 1rem;
+}
+
+#unchecked-block {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 1rem;
+  background: red;
+  display: inline-block;
+  text-align: center;
+  vertical-align: sub;
+}
+
+#checked-block {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 1rem;
+  background: pink;
+  display: inline-block;
+  opacity: 0;
+  margin-bottom: 0.75rem;
+}
+
+.hour input:checked + label #checked-block {
+  opacity: 1;
+}
+
+.hour input {
+  display: none;
+}
