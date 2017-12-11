@@ -12,7 +12,7 @@ class TimeBlock extends React.Component {
     this.state = {
       startTime: parseInt(props.user.settings.startTime),
       endTime: parseInt(props.user.settings.endTime),
-      selectedService: '',
+      selectedService: props.user.settings.services[0].service,
       dummyBookings: [],
       settings: props.user.settings,
       bookings: props.user.bookings,
@@ -29,7 +29,8 @@ class TimeBlock extends React.Component {
       dispatch: props.dispatch,
       displayDate: '',
       bookingsSet: false,
-      isModalOpen: false
+      isModalOpen: false,
+      error: ''
     }
   }
   componentDidMount() {
@@ -356,9 +357,13 @@ class TimeBlock extends React.Component {
   createBooking = (e) => {
     e.preventDefault();
 
-    this.state.dispatch(startCreateBooking(this.state.booking, this.state.uid)).then( () => {
-      this.state.history.push(`/${this.state.uid}/dashboard`)
-    })
+    if (this.state.booking.client.email && this.state.booking.client.name) {
+      this.state.dispatch(startCreateBooking(this.state.booking, this.state.uid)).then( () => {
+        this.state.history.push(`/${this.state.uid}/dashboard`)
+      })
+    } else {
+      this.setState( () => ({error: 'Please provide your email and name'}))
+    }
   }
   generateServiceOptions = () => {
     const services = this.state.settings.services
@@ -403,6 +408,7 @@ class TimeBlock extends React.Component {
     return (
       <div>
         <h3>Bookings for {this.state.displayDate}</h3>
+        {this.state.error}
         <form>
           <input
             type='text'
@@ -440,8 +446,6 @@ class TimeBlock extends React.Component {
               {this.state.isModalOpen ? this.generateServiceOptions() : ''}
             </select>
           </form>
-          <div id="full_description">
-          </div>
           <button onClick={this.onModalClose}>Submit Booking</button>
         </Modal>
       </div>

@@ -36,9 +36,6 @@ class Dashboard extends React.Component {
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ calendarFocused: focused }));
   };
-  onTest = () => {
-    this.state.dispatch(startGetSettings())
-  }
   render() {
     return (
       <div className='dashboard'>
@@ -50,7 +47,6 @@ class Dashboard extends React.Component {
           onFocusChange={this.onFocusChange}
           numberOfMonths={1}
         />
-        <button onClick={this.onTest}>Test</button>
       </div>
     )
   }
