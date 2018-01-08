@@ -24,16 +24,18 @@ class Header extends React.Component {
   onCreateClick = (e, {name}) => {
     this.setState(() => ({activeItem: name}), this.state.history.push('/create'))
   }
+  onSignUp = () => {
+    this.state.history.push('/register')
+  }
   render() {
     const {activeItem} = this.state
     return (
-      // <div className='header'>
         <Menu className='nav-header' color={'teal'} inverted size='massive' stackable compact>
           <Menu.Item name='Home' active={activeItem === 'home'} onClick={this.onHomeClick}/>
-          <Menu.Item name='Create Survey' active={activeItem === 'create'} onClick={this.onCreateClick}/>
+          <Menu.Item name='My Bookings' active={activeItem === 'create'} onClick={this.onCreateClick}/>
           <p id='header-brand'></p>
           <Menu.Menu position='right'>
-            {!this.state.auth.uid ? <Button primary>Sign Up</Button>
+            {!this.state.auth.uid ? <Button onClick={this.onSignUp} primary>Sign Up</Button>
               : <Dropdown item text={this.state.auth.displayName || 'Anonymous'}>
                   <Dropdown.Menu>
                     <Dropdown.Item>

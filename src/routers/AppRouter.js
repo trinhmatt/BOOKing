@@ -9,6 +9,7 @@ import Register from '../components/Register'
 import RegisterSuccess from '../components/RegisterSuccess'
 import Login from '../components/LoginPage'
 import CreateBooking from '../components/CreateBooking'
+import Settings from '../components/Settings'
 
 export const history = createHistory();
 
@@ -21,6 +22,7 @@ const AppRouter = () => (
         <PublicRoute path='/:uid/booking/:year/:month/:day' component={CreateBooking} />
         <Route path='/register' component={Register} exact={true}/>
         <PrivateRoute path='/register/success' component={RegisterSuccess} />
+        <PrivateRoute path='/settings' component={Settings} />
         <Redirect from='/redirect' to='/dashboard' />
       </Switch>
     </div>
