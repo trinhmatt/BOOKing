@@ -24,6 +24,7 @@ class TimeBlock extends React.Component {
         }
       },
       uid: props.uid,
+      auth: props.auth,
       history: props.history,
       match: props.match,
       dispatch: props.dispatch,
@@ -358,6 +359,12 @@ class TimeBlock extends React.Component {
     e.preventDefault();
 
     if (this.state.booking.client.email && this.state.booking.client.name) {
+      emailjs.send('gmail', 'booking_template', {
+        "to_email": this.state.booking.client.email,
+        "from_name": this.state.auth.displayName,
+        "to_name": this.state.booking.client.name,
+        "message_html": "Fuck you o' clock"
+      })
       this.state.dispatch(startCreateBooking(this.state.booking, this.state.uid)).then( () => {
         this.state.history.push(`/${this.state.uid}/dashboard`)
       })
@@ -454,7 +461,8 @@ class TimeBlock extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  user: state.users[props.uid]
+  user: state.users[props.uid],
+  auth: state.auth
 })
 
 export default withRouter(connect(mapStateToProps, undefined)(TimeBlock))
