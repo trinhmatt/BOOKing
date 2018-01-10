@@ -12,7 +12,8 @@ class TimeBlock extends React.Component {
     this.state = {
       startTime: parseInt(props.user.settings.startTime),
       endTime: parseInt(props.user.settings.endTime),
-      selectedService: props.user.settings.services[0].service,
+      selectedService: '',
+      isServiceSelected: false,
       dummyBookings: [],
       settings: props.user.settings,
       bookings: props.user.bookings,
@@ -122,6 +123,27 @@ class TimeBlock extends React.Component {
       }
     }
     return this.setState(() => ({displayDate, dummyBookings, bookings, bookingsSet: true}))
+  }
+  componentDidUpdate() {
+    //Check if the user has selected a service
+    if (this.state.isServiceSelected) {
+      //Find the correct service from the list of the vendor's services
+      let service;
+      for (let i = 0; i<this.state.settings.services.length; i++) {
+        if (this.state.settings.services[i].service === this.state.selectedService) {
+          service = this.state.settings.services[i]
+          break
+        }
+      }
+      //Need to set isServiceSelected back to false to prevent infinite loop
+      this.setState((prevState) => ({
+        booking: {
+          ...prevState.booking,
+          service
+        },
+        isServiceSelected: false
+      }))
+    }
   }
   onTimeSelect = (e) => {
     const timeBlock = e.target.id
@@ -359,12 +381,23 @@ class TimeBlock extends React.Component {
     e.preventDefault();
 
     if (this.state.booking.client.email && this.state.booking.client.name) {
+      //message_html = the time of the appointment
+      const timeSplit = this.state.booking.time.split('_')
+      let time = timeSplit[0]
+
+      if (timeSplit[1] === '0') {
+        time += ':00'
+      } else {
+        time += ':30'
+      }
+
       emailjs.send('gmail', 'booking_template', {
         "to_email": this.state.booking.client.email,
         "from_name": this.state.auth.displayName,
         "to_name": this.state.booking.client.name,
-        "message_html": "Fuck you o' clock"
+        "message_html": time
       })
+
       this.state.dispatch(startCreateBooking(this.state.booking, this.state.uid)).then( () => {
         this.state.history.push(`/${this.state.uid}/dashboard`)
       })
@@ -394,21 +427,10 @@ class TimeBlock extends React.Component {
   }
   onServiceSelect = (e) => {
     const selectedService = e.target.value
-    let services = this.state.settings.services
-
-    for (let i=0; i<services.length; i++) {
-      if (services[i].service === selectedService) {
-        services = services[i]
-        break
-      }
-    }
 
     this.setState( (prevState) => ({
       selectedService,
-      booking: {
-        ...prevState.booking,
-        service: services
-      }
+      isServiceSelected: true
     }))
   }
   render() {
@@ -450,6 +472,7 @@ class TimeBlock extends React.Component {
           <h1 id="heading">Select your requires service</h1>
           <form>
             <select value={this.state.selectedService} onChange={this.onServiceSelect}>
+              <option> </option>
               {this.state.isModalOpen ? this.generateServiceOptions() : ''}
             </select>
           </form>
