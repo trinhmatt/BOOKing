@@ -51,6 +51,7 @@ class TimeBlock extends React.Component {
       }}
       dummyBookings.push(bookingBlock)
     }
+
     //Need to know which times are already booked
     if (!!this.state.bookings) {
       for (let time in this.state.bookings[databaseDate]) {
@@ -59,9 +60,10 @@ class TimeBlock extends React.Component {
         let hour = time.substring(0, time.indexOf('_'))
         const numBlocks = Math.floor((numRequiredTime/30))
 
+
         if (time.slice(-1) === '5') {
           if (numBlocks % 2 === 1 && numBlocks !== 1) {
-            const endTime = parseInt(hour) + numBlocks - 1
+            const endTime = parseInt(hour) + (numBlocks - 1)
 
             for (let i = hour; i<endTime; i++) {
               let firstHour = (i.toString()) + '_5'
@@ -75,23 +77,19 @@ class TimeBlock extends React.Component {
               }
             }
           } else {
-            const endTime = parseInt(hour) + numBlocks
+            const endTime = parseInt(hour) + (numBlocks/2)
 
             for (let i = hour; i<endTime; i++) {
               let firstHour = (i.toString()) + '_5'
               let secondHour = (parseInt(i)+1).toString() + '_0'
 
-              if (i = endTime) {
-                bookings.push(firstHour)
-              } else {
-                bookings.push(firstHour)
-                bookings.push(secondHour)
-              }
+              bookings.push(firstHour)
+              bookings.push(secondHour)
             }
           }
         } else {
           if (numBlocks % 2 === 1 && numBlocks !== 1) {
-            const endTime = parseInt(hour) + numBlocks - 1
+            const endTime = parseInt(hour) + (numBlocks - 1)
 
             for (let i = hour; i<endTime; i++) {
               let firstHour = (i.toString()) + '_0'
@@ -105,18 +103,14 @@ class TimeBlock extends React.Component {
               }
             }
           } else {
-            const endTime = parseInt(hour) + numBlocks
+            const endTime = parseInt(hour) + (numBlocks/2)
 
             for (let i = hour; i<endTime; i++) {
               let firstHour = (i.toString()) + '_0'
               let secondHour = (i.toString()) + '_5'
 
-              if (i = endTime) {
-                bookings.push(firstHour)
-              } else {
-                bookings.push(firstHour)
-                bookings.push(secondHour)
-              }
+              bookings.push(firstHour)
+              bookings.push(secondHour)
             }
           }
         }
@@ -381,7 +375,8 @@ class TimeBlock extends React.Component {
     e.preventDefault();
 
     if (this.state.booking.client.email && this.state.booking.client.name) {
-      //message_html = the time of the appointment
+      //message_html for booking_template = the time of the appointment
+        //..For new_appointment = Name and email of the client
       const timeSplit = this.state.booking.time.split('_')
       let time = timeSplit[0]
 
@@ -391,11 +386,24 @@ class TimeBlock extends React.Component {
         time += ':30'
       }
 
+      let bookingDetails = `${this.state.booking.service.service} at ` + time
+
+      if (!!this.state.booking.client.phoneNumber) {
+        bookingDetails += ` (${this.state.booking.client.phoneNumber})`
+      }
+
       emailjs.send('gmail', 'booking_template', {
         "to_email": this.state.booking.client.email,
         "from_name": this.state.auth.displayName,
         "to_name": this.state.booking.client.name,
         "message_html": time
+      })
+
+      emailjs.send('gmail', 'new_appointment', {
+        "to_email": this.state.auth.email,
+        "from_name": this.state.booking.client.name,
+        "to_name": this.state.auth.displayName,
+        "message_html": bookingDetails
       })
 
       this.state.dispatch(startCreateBooking(this.state.booking, this.state.uid)).then( () => {
