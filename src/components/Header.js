@@ -21,8 +21,9 @@ class Header extends React.Component {
     const uid = this.state.match.params.uid
     this.setState(() => ({activeItem: name}), this.state.history.push(`/${uid}/dashboard`))
   }
-  onCreateClick = (e, {name}) => {
-    this.setState(() => ({activeItem: name}), this.state.history.push('/create'))
+  onBookingsClick = (e, {name}) => {
+    const uid = this.state.match.params.uid
+    this.setState(() => ({activeItem: name}), this.state.history.push(`/${uid}/bookings`))
   }
   onSignUp = () => {
     this.state.history.push('/register')
@@ -30,9 +31,9 @@ class Header extends React.Component {
   render() {
     const {activeItem} = this.state
     return (
-        <Menu className='nav-header' color={'teal'} inverted size='massive' stackable compact>
+        <Menu className='nav-header' color={'teal'} inverted size='massive' stackable>
           <Menu.Item name='Home' active={activeItem === 'home'} onClick={this.onHomeClick}/>
-          <Menu.Item name='My Bookings' active={activeItem === 'create'} onClick={this.onCreateClick}/>
+          <Menu.Item name='My Bookings' active={activeItem === 'create'} onClick={this.onBookingsClick}/>
           <p id='header-brand'></p>
           <Menu.Menu position='right'>
             {!this.state.auth.uid ? <Button onClick={this.onSignUp} primary>Sign Up</Button>
