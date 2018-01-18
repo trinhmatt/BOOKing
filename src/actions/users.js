@@ -37,7 +37,12 @@ export const startGetSettings = () => {
 
 export const startCreateBooking = (booking, uid) => {
   return (dispatch) => {
-    const databaseBooking = {[booking.time]: booking.service}
+    const databaseBooking = {
+      [booking.time]: {
+        ...booking.service,
+        client: booking.client
+      }
+    }
     const stateBooking = {service: booking.service, time: booking.time, date: booking.date, uid: uid}
     return database.ref(`users/${uid}/bookings/${booking.date}`).update(databaseBooking)
   }

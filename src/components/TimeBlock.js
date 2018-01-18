@@ -37,7 +37,7 @@ class TimeBlock extends React.Component {
   }
   componentDidMount() {
     let displayDate = this.state.match.params.year+this.state.match.params.month+this.state.match.params.day
-    const databaseDate = moment(displayDate).format('YYYYMMMD')
+    const databaseDate = moment(displayDate).format('YYYYMMMDD')
     displayDate = moment(displayDate).format('dddd, MMMM Do YYYY')
 
     let dummyBookings = [];
@@ -386,7 +386,7 @@ class TimeBlock extends React.Component {
         time += ':30'
       }
 
-      let bookingDetails = `${this.state.booking.service.service} at ` + time
+      let bookingDetails = `${this.state.booking.service.service} on ${this.state.displayDate} at ` + time
 
       if (!!this.state.booking.client.phoneNumber) {
         bookingDetails += ` (${this.state.booking.client.phoneNumber})`

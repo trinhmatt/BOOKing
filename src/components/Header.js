@@ -33,17 +33,16 @@ class Header extends React.Component {
     return (
         <Menu className='nav-header' color={'teal'} inverted size='massive' stackable>
           <Menu.Item name='Home' active={activeItem === 'home'} onClick={this.onHomeClick}/>
-          <Menu.Item name='My Bookings' active={activeItem === 'create'} onClick={this.onBookingsClick}/>
           <p id='header-brand'></p>
           <Menu.Menu position='right'>
             {!this.state.auth.uid ? <Button onClick={this.onSignUp} primary>Sign Up</Button>
               : <Dropdown item text={this.state.auth.displayName || 'Anonymous'}>
                   <Dropdown.Menu>
                     <Dropdown.Item>
-                      <Link to={`/surveys/${this.state.auth.uid}`}>My Surveys</Link>
+                      <Link to={`/${this.state.auth.uid}/bookings`}>My Bookings</Link>
                     </Dropdown.Item>
                     <Dropdown.Item>
-                      <Link to='/settings'>Settings</Link>
+                      <Link to={`/${this.state.auth.uid}/settings`}>Settings</Link>
                     </Dropdown.Item>
                     <Dropdown.Item onClick={this.state.startLogOut}>Logout</Dropdown.Item>
                   </Dropdown.Menu>

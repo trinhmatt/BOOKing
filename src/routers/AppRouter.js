@@ -24,7 +24,7 @@ const AppRouter = () => (
         <PrivateRoute path='/:uid/bookings' component={MyBookings} />
         <Route path='/register' component={Register} exact={true}/>
         <PrivateRoute path='/register/success' component={RegisterSuccess} />
-        <PrivateRoute path='/settings' component={Settings} />
+        <PrivateRoute path='/:uid/settings' component={Settings} />
         <Redirect from='/redirect' to='/dashboard' />
       </Switch>
     </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import MyBookingsDisplay from './MyBookingsDisplay'
 
 class MyBookings extends React.Component {
   constructor(props) {
@@ -15,11 +16,14 @@ class MyBookings extends React.Component {
     let bookingsJSX = []
     for (let date in this.state.bookings) {
       bookingsJSX.push((
-        <div>
-          <h2>{date}</h2>
-        </div>
+        <MyBookingsDisplay
+          date={date}
+          booking={this.state.bookings[date]}
+          key={date}
+        />
       ))
     }
+    bookingsJSX.reverse()
     this.setState( () => ({bookingsJSX}))
   }
   render() {
