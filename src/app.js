@@ -40,6 +40,7 @@ firebase.auth().onAuthStateChanged( (user) => {
       history.push(`/${user.uid}/dashboard`)
     }
   } else {
+    history.push('/')
     renderApp();
   }
 })

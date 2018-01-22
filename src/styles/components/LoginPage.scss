@@ -1,0 +1,39 @@
+.login-page {
+  background-color: $blue;
+  color: white;
+  height: 100vh;
+  text-align: center;
+  padding-top: 10vh;
+}
+
+#icon {
+  background-image: url('https://i.imgur.com/Z5lGabz.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: $blue;
+  height: 30vh;
+  width: 30vh;
+  margin: 0 auto;
+}
+
+.login-page input {
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.login-page button {
+  outline: 1px solid $blue;
+  border: none;
+  background-color: white;
+  color: $blue;
+  border-radius: 0.5rem;
+}
+
+.register-link {
+  color: white;
+}
+
+.register-link:hover {
+  color: $light-grey
+}

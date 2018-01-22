@@ -31,7 +31,7 @@ class Header extends React.Component {
   render() {
     const {activeItem} = this.state
     return (
-        <Menu className='nav-header' color={'teal'} inverted size='massive' stackable>
+        <Menu className='nav-header' color={'blue'} inverted size='massive' stackable>
           <Menu.Item name='Home' active={activeItem === 'home'} onClick={this.onHomeClick}/>
           <p id='header-brand'></p>
           <Menu.Menu position='right'>
