@@ -11,6 +11,9 @@ import Login from '../components/LoginPage'
 import CreateBooking from '../components/CreateBooking'
 import Settings from '../components/Settings'
 import MyBookings from '../components/MyBookings'
+import ServiceSelectPage from '../components/ServiceSelectPage'
+import BookingConfirmation from '../components/BookingConfirmation'
+
 
 export const history = createHistory();
 
@@ -19,10 +22,12 @@ const AppRouter = () => (
     <div>
       <Switch>
         <Route path='/' component={Login} exact={true} />
-        <PublicRoute path='/:uid/dashboard' component={Dashboard} exact={true}/>
-        <PublicRoute path='/:uid/booking/:year/:month/:day' component={CreateBooking} />
+        <PublicRoute path='/:uid/dashboard' component={Dashboard} exact={true} />
+        <PublicRoute path='/:uid/:year/:month/:day/selectservice' component={ServiceSelectPage} />
+        <PublicRoute path='/:uid/:year/:month/:day/booking' component={CreateBooking} />
+        <PublicRoute path='/confirmation' component={BookingConfirmation} />
         <PrivateRoute path='/:uid/bookings' component={MyBookings} />
-        <Route path='/register' component={Register} exact={true}/>
+        <Route path='/register' component={Register} exact={true} />
         <PrivateRoute path='/register/success' component={RegisterSuccess} />
         <PrivateRoute path='/:uid/settings' component={Settings} />
         <Redirect from='/redirect' to='/dashboard' />

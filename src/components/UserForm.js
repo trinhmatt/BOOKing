@@ -9,6 +9,7 @@ class UserForm extends React.Component {
       username: '',
       email: '',
       password: '',
+      rememberMe: false,
       error: '',
       history: props.history
     }
@@ -25,14 +26,28 @@ class UserForm extends React.Component {
     const password = e.target.value
     this.setState({password})
   }
+  onRememberMe = () => {
+    if (!this.state.rememberMe) {
+      this.setState( () => ({rememberMe: true}))
+    } else {
+      this.setState( () => ({rememberMe: false}))
+    }
+  }
   onSubmit = (e) => {
     e.preventDefault();
     if (!this.state.email || !this.state.password) {
       this.setState({error: 'Please enter an email and password'})
-    } else {
+    } else if (this.state.history.location.pathname === '/register'){
       this.setState({error: ''})
       this.props.onSubmit({
         username: this.state.username,
+        email: this.state.email,
+        password: this.state.password
+      })
+    } else {
+      this.setState({error: ''})
+      this.props.onSubmit({
+        rememberMe: this.state.rememberMe,
         email: this.state.email,
         password: this.state.password
       })
@@ -42,18 +57,26 @@ class UserForm extends React.Component {
     return (
       <div>
         <form className='user-form' onSubmit={this.onSubmit}>
+          {this.state.history.location.pathname === '/' ? <div>
+            <p>Remember Me</p>
+            <input
+              type='checkbox'
+              value={this.state.rememberMe}
+              onChange={this.onRememberMe}
+            />
+          </div>
+          : <input
+            type='text'
+            placeholder='username'
+            value={this.state.username}
+            onChange={this.onUsernameChange}
+          />}
           <input
             type='text'
             placeholder='email'
             value={this.state.email}
             onChange={this.onEmailChange}
           />
-          {this.state.history.location.pathname === '/' ? '' : <input
-            type='text'
-            placeholder='username'
-            value={this.state.username}
-            onChange={this.onUsernameChange}
-          />}
           <input
             type='password'
             placeholder='password'

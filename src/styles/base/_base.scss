@@ -1,16 +1,14 @@
 html {
   font-size: 62.5%;
-  margin: 0;
-  height: 100%;
-  width: 100%;
+  min-height: 100%;
+  position: relative;
 }
 
 body {
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
   background-color: white;
   font-size: $m-size;
-  margin: 0;
-  height: 100%;
+  padding: 0;
   color: black;
 }
 
@@ -32,8 +30,4 @@ button:disabled {
 
 i {
   cursor: pointer;
-}
-
-#app {
-  height: 100%
 }

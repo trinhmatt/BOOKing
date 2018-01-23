@@ -25,12 +25,12 @@ class Dashboard extends React.Component {
     this.state.dispatch(startGetSettings(uid))
   }
   onDateChange = (date) => {
-    const formattedDate = moment(date._d).format('YYYY/MM/DD/')
+    const formattedDate = moment(date._d).format('YYYY/MM/DD')
     const uid = this.state.match.params.uid
     if (date) {
       this.setState(() => ({
         date
-      }), this.state.history.push(`/${uid}/booking/${formattedDate}`));
+      }), this.state.history.push(`/${uid}/${formattedDate}/selectservice`));
     }
   }
   onFocusChange = ({ focused }) => {
