@@ -53,15 +53,21 @@ class TestBookings extends React.Component {
 
     for (let bookingTime in this.state.user.bookings[databaseDate]) {
       const startofBooking = moment(bookingTime, 'HH:mm')
-      console.log(startofBooking.format('HH:mm'))
       const requiredCurrentBookingTime = this.state.user.bookings[databaseDate][bookingTime].service.requiredTime
-      let endOfBooking = startofBooking.add(requiredCurrentBookingTime, 'minutes')
-      console.log(endOfBooking.format('HH:mm'))
-
+      let endOfBooking = moment(bookingTime, 'HH:mm').add(requiredCurrentBookingTime, 'minutes')
       availableTimes = availableTimes.filter((time) => {
-        return !moment(time).isBetween(startofBooking, endOfBooking)
+        return !(
+          moment(time, 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute') ||
+            moment(time, 'HH:mm').isSame(startofBooking)
+        )
       })
-      console.log(moment('09:01', 'HH:mm').isBetween(startofBooking.format('HH:mm'), endOfBooking.format('HH:mm'), 'minute'))
+
+      availableTimes.forEach( (time) => {
+        console.log(time, moment(time, 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute'))
+        console.log(time, moment(time, 'HH:mm').isSame(startofBooking))
+      })
+
+      // console.log(moment('09:01', 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute'))
     }
 
 
@@ -139,22 +145,22 @@ class TestBookings extends React.Component {
         bookingDetails += ` (${this.state.booking.client.phoneNumber})`
       }
 
-      // emailjs.send('gmail', 'booking_template', {
-      //   "to_email": this.state.booking.client.email,
-      //   "from_name": this.state.auth.displayName,
-      //   "to_name": this.state.booking.client.name,
-      //   "message_html": time
-      // })
-      //
-      // emailjs.send('gmail', 'new_appointment', {
-      //   "to_email": this.state.auth.email,
-      //   "from_name": this.state.booking.client.name,
-      //   "to_name": this.state.auth.displayName,
-      //   "message_html": bookingDetails
-      // })
+      emailjs.send('gmail', 'booking_template', {
+        "to_email": this.state.booking.client.email,
+        "from_name": this.state.auth.displayName,
+        "to_name": this.state.booking.client.name,
+        "message_html": this.state.booking.service.time
+      })
+
+      emailjs.send('gmail', 'new_appointment', {
+        "to_email": this.state.auth.email,
+        "from_name": this.state.booking.client.name,
+        "to_name": this.state.auth.displayName,
+        "message_html": bookingDetails
+      })
 
       this.state.dispatch(startCreateBooking(this.state.booking, this.state.user.settings.uid)).then( () => {
-        this.state.history.push(`/confirmation`)
+        this.state.history.push(`/${this.state.user.settings.uid}/confirmation`)
       })
     } else {
       this.setState( () => ({error: 'Please provide your email and name'}))

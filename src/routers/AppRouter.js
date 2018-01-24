@@ -8,7 +8,6 @@ import Dashboard from '../components/Dashboard'
 import Register from '../components/Register'
 import RegisterSuccess from '../components/RegisterSuccess'
 import Login from '../components/LoginPage'
-import CreateBooking from '../components/CreateBooking'
 import Settings from '../components/Settings'
 import MyBookings from '../components/MyBookings'
 import ServiceSelectPage from '../components/ServiceSelectPage'
@@ -24,8 +23,7 @@ const AppRouter = () => (
         <Route path='/' component={Login} exact={true} />
         <PublicRoute path='/:uid/dashboard' component={Dashboard} exact={true} />
         <PublicRoute path='/:uid/:year/:month/:day/selectservice' component={ServiceSelectPage} />
-        <PublicRoute path='/:uid/:year/:month/:day/booking' component={CreateBooking} />
-        <PublicRoute path='/confirmation' component={BookingConfirmation} />
+        <PublicRoute path='/:uid/confirmation' component={BookingConfirmation} />
         <PrivateRoute path='/:uid/bookings' component={MyBookings} />
         <Route path='/register' component={Register} exact={true} />
         <PrivateRoute path='/register/success' component={RegisterSuccess} />

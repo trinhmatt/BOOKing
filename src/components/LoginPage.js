@@ -34,7 +34,8 @@ class Login extends React.Component {
           <UserForm onSubmit={(user) => {
             const email = user.email
             const password = user.password
-            this.state.startLogin(email, password)
+            const rememberMe = user.rememberMe
+            this.state.startLogin(email, password, rememberMe)
           }}/>
         </div>
       </div>
@@ -43,7 +44,7 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startLogin: (email, password) => dispatch(startLogin(email, password))
+  startLogin: (email, password, rememberMe) => dispatch(startLogin(email, password, rememberMe))
 })
 
 export default connect(undefined, mapDispatchToProps)(Login)
