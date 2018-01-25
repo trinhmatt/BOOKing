@@ -40,8 +40,14 @@ firebase.auth().onAuthStateChanged( (user) => {
       history.push(`/${user.uid}/dashboard`)
     }
   } else {
-    // Need a way to redirect the user after log out while still allowing anonymous users to create bookings
-    // history.push('/')
+
+    //Check if a user signed out, if they did redirect to the landing
+    //Need this so that anonymous users can still create bookings 
+    if (!!store.getState().auth.wasLoggedIn) {
+      history.push('/')
+      renderApp();
+    }
+
     renderApp();
   }
 })

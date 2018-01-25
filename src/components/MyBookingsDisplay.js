@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 class MyBookingsDisplay extends React.Component {
   constructor(props) {
     super(props)
@@ -13,20 +14,14 @@ class MyBookingsDisplay extends React.Component {
   componentDidMount() {
     let allBookings = [];
     for (let time in this.state.booking) {
-      const timeSplit = time.split('_')
-      let formattedTime = timeSplit[0]
 
-      if (timeSplit[1] === '0') {
-        formattedTime += ':00'
-      } else {
-        formattedTime += ':30'
-      }
+      
 
       const bookingJSX = (
         <div key={time}>
-          <h2>{formattedTime}</h2>
+          <h2>{time}</h2>
           <p>
-            Service: {this.state.booking[time].service}
+            Service: {this.state.booking[time].service.service}
           </p>
           <p>
             Client Name: {this.state.booking[time].client.name}

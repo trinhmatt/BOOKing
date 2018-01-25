@@ -1,5 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import moment from 'moment'
+import { SingleDatePicker } from 'react-dates';
 import MyBookingsDisplay from './MyBookingsDisplay'
 
 class MyBookings extends React.Component {
@@ -9,28 +11,95 @@ class MyBookings extends React.Component {
     this.state = {
       bookings: props.users.bookings,
       bookingsSet: false,
-      bookingsJSX: []
+      bookingsDict: [],
+      bookingsToRender: [],
+      calendarDate: moment(),
+      selectedDate: null,
+      calendarFocused: false
     }
   }
   componentDidMount() {
-    let bookingsJSX = []
+    this.setUpBookings();
+  }
+  setUpBookings = () => {
+    let bookingsDict = [];
+    let bookingsToRender = [];
     for (let date in this.state.bookings) {
-      bookingsJSX.push((
+      const formattedDate = moment(date, 'YYYYMMMDD').format('MMM Do, YYYY')
+
+      //Need each component to be contained in an object so the user can filter
+      //their bookings by date
+      bookingsDict.push(
+        {[date]: (
         <MyBookingsDisplay
-          date={date}
+          date={formattedDate}
           booking={this.state.bookings[date]}
           key={date}
         />
-      ))
+        )
+      })
+
+      bookingsToRender.push(
+        (<MyBookingsDisplay
+          date={formattedDate}
+          booking={this.state.bookings[date]}
+          key={date}
+        />)
+      )
     }
-    bookingsJSX.reverse()
-    this.setState( () => ({bookingsJSX}))
+    //So the most recent bookings appear first
+    bookingsToRender.reverse()
+    this.setState( () => ({bookingsDict, bookingsToRender}))
+  }
+  onDateChange = (date) => {
+    if (date) {
+      const dictDate = moment(date._d).format('YYYYMMMDD')
+      const calendarDate = moment(date._d)
+
+
+      this.setState( () => ({selectedDate: dictDate, calendarDate}), this.filterBookings)
+    } else {
+      this.setUpBookings()
+    }
+  }
+  onFocusChange = ({ focused }) => {
+    this.setState(() => ({ calendarFocused: focused }));
+  }
+  filterBookings = () => {
+    const filteredDict = this.state.bookingsDict.filter( (date) => {
+      return !!(date[this.state.selectedDate])
+    })
+
+    if (!!filteredDict[0]) {
+      const bookingsToRender = [(filteredDict[0][this.state.selectedDate])]
+
+      this.setState( () => ({bookingsToRender}))
+    } else {
+      const bookingsToRender = []
+
+      this.setState( () => ({bookingsToRender}))
+    }
+  }
+  isDayBlocked = (day) => {
+    if (moment().isSame(day, 'day')) {
+      return true
+    }
   }
   render() {
     return (
       <div>
         <h1>My Bookings</h1>
-        {this.state.bookingsJSX}
+        <SingleDatePicker
+          date={this.state.calendarDate}
+          showClearDate={true}
+          onDateChange={this.onDateChange}
+          focused={this.state.calendarFocused}
+          onFocusChange={this.onFocusChange}
+          numberOfMonths={1}
+          isOutsideRange={() => false}
+          isDayBlocked={this.isDayBlocked}
+        />
+        {this.state.bookingsToRender}
       </div>
     )
   }

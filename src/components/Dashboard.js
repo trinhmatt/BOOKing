@@ -2,6 +2,7 @@ import React from 'react';
 import { SingleDatePicker } from 'react-dates';
 import moment from 'moment'
 import { connect } from 'react-redux'
+import { firebase } from '../firebase/firebase'
 import 'react-dates/lib/css/_datepicker.css';
 import "react-dates/initialize"
 import { startGetSettings } from '../actions/users'
@@ -21,8 +22,13 @@ class Dashboard extends React.Component {
     }
   }
   componentDidMount() {
+    //Get the correct bookings and settings for the user
     const uid = this.state.match.params.uid
     this.state.dispatch(startGetSettings(uid))
+
+    //Get the users displayName from firebase
+    const displayName = firebase.auth().UserInfo('displayName')
+    console.log
   }
   onDateChange = (date) => {
     const formattedDate = moment(date._d).format('YYYY/MM/DD')
@@ -52,4 +58,8 @@ class Dashboard extends React.Component {
   }
 }
 
-export default connect(undefined, undefined)(Dashboard);
+const mapStateToProps = (state, props) => ({
+  users: state.users[props.match.params.uid]
+})
+
+export default connect(mapStateToProps, undefined)(Dashboard);

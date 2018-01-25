@@ -9,7 +9,9 @@ export default (state = {}, action) => {
         email: action.email
       }
     case 'LOGOUT':
-      return {};
+      return {
+        wasLoggedIn: true
+      };
     default:
       return state;
   }
