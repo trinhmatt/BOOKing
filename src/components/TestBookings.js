@@ -42,6 +42,7 @@ class TestBookings extends React.Component {
     const databaseDate = moment(displayDate).format('YYYYMMMDD')
     displayDate = moment(displayDate).format('dddd, MMMM Do YYYY')
 
+    //Set up initial times based on the operating hours of the user
     while (true) {
       let time = moment(startTime).format('HH:mm');
       availableTimes.push(time);
@@ -51,25 +52,20 @@ class TestBookings extends React.Component {
       }
     }
 
-    for (let bookingTime in this.state.user.bookings[databaseDate]) {
-      const startofBooking = moment(bookingTime, 'HH:mm')
-      const requiredCurrentBookingTime = this.state.user.bookings[databaseDate][bookingTime].service.requiredTime
-      let endOfBooking = moment(bookingTime, 'HH:mm').add(requiredCurrentBookingTime, 'minutes')
-      availableTimes = availableTimes.filter((time) => {
-        return !(
-          moment(time, 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute') ||
-            moment(time, 'HH:mm').isSame(startofBooking)
-        )
-      })
-
-      availableTimes.forEach( (time) => {
-        console.log(time, moment(time, 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute'))
-        console.log(time, moment(time, 'HH:mm').isSame(startofBooking))
-      })
-
-      // console.log(moment('09:01', 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute'))
+    //Filter out the times where bookings have already been created, if any
+    if (!!this.state.user.bookings) {
+      for (let bookingTime in this.state.user.bookings[databaseDate]) {
+        const startofBooking = moment(bookingTime, 'HH:mm')
+        const requiredCurrentBookingTime = this.state.user.bookings[databaseDate][bookingTime].service.requiredTime
+        let endOfBooking = moment(bookingTime, 'HH:mm').add(requiredCurrentBookingTime, 'minutes')
+        availableTimes = availableTimes.filter((time) => {
+          return !(
+            moment(time, 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute') ||
+              moment(time, 'HH:mm').isSame(startofBooking)
+          )
+        })
+      }
     }
-
 
     this.setState( (prevState) => ({
       availableTimes,
@@ -138,7 +134,7 @@ class TestBookings extends React.Component {
       //..For new_appointment = Name and email of the client
 
       let bookingDetails = (
-        `${this.state.booking.service.service} on ${this.state.displayDate} at ${this.state.booking.service.time}`
+        `${this.state.booking.service.service.service} on ${this.state.displayDate} at ${this.state.booking.service.time}`
       )
 
       if (!!this.state.booking.client.phoneNumber) {
@@ -170,9 +166,8 @@ class TestBookings extends React.Component {
     return (
       <div>
         <h1>
-          Test Bookings
+          Bookings for {this.state.displayDate}
         </h1>
-        <h3>{this.state.displayDate}</h3>
         <p>{this.state.error}</p>
         <form>
           <input

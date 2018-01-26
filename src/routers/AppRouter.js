@@ -12,6 +12,7 @@ import Settings from '../components/Settings'
 import MyBookings from '../components/MyBookings'
 import ServiceSelectPage from '../components/ServiceSelectPage'
 import BookingConfirmation from '../components/BookingConfirmation'
+import SetAvailability from '../components/SetAvailability'
 
 
 export const history = createHistory();
@@ -27,7 +28,8 @@ const AppRouter = () => (
         <PrivateRoute path='/:uid/bookings' component={MyBookings} />
         <Route path='/register' component={Register} exact={true} />
         <PrivateRoute path='/register/success' component={RegisterSuccess} />
-        <PrivateRoute path='/:uid/settings' component={Settings} />
+        <PrivateRoute path='/:uid/settings' component={Settings} exact={true} />
+        <PrivateRoute path='/:uid/settings/availability' component={SetAvailability} />
         <Redirect from='/redirect' to='/dashboard' />
       </Switch>
     </div>

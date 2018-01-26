@@ -1,11 +1,20 @@
 import database from '../firebase/firebase';
 
-export const setServices = ({startTime, endTime, services, uid}) => ({
+export const setServices = ({
+  startTime,
+  endTime,
+  services,
+  uid,
+  displayName,
+  weeklyAvailability
+}) => ({
   type: 'SET_SERVICES_AND_HOURS',
   startTime,
   endTime,
   services,
-  uid
+  uid,
+  displayName,
+  weeklyAvailability
 })
 
 export const startSetServices = (servicesData = {}) => {

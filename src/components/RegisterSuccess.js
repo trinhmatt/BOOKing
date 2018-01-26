@@ -13,6 +13,15 @@ class RegisterSuccess extends React.Component {
       endTime: '',
       services: [],
       nServices: 0,
+      weeklyAvailability: {
+        sunday: false,
+        monday: false,
+        tuesday: false,
+        wednesday: false,
+        thursday: false,
+        friday: false,
+        saturday: false
+      },
       dispatch: props.dispatch,
       history: props.history
     }
@@ -47,6 +56,24 @@ class RegisterSuccess extends React.Component {
       return {services: allServices}
     })
   }
+  onDayClick = (e) => {
+    e.persist()
+    if (!this.state.weeklyAvailability[e.target.id]) {
+      this.setState( (prevState) => ({
+        weeklyAvailability: {
+          ...prevState.weeklyAvailability,
+          [e.target.id]: true
+        }
+      }))
+    } else {
+      this.setState( (prevState) => ({
+        weeklyAvailability: {
+          ...prevState.weeklyAvailability,
+          [e.target.id]: false
+        }
+      }))
+    }
+  }
   generateServicesInput = () => {
     let servicesInputs = []
     for (let i=0; i<this.state.nServices; i++) {
@@ -76,10 +103,12 @@ class RegisterSuccess extends React.Component {
     const services = {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
-      services: this.state.services
+      availability: this.state.weeklyAvailability,
+      services: this.state.services,
+      displayName: this.state.user.displayName
     }
     this.state.dispatch(startSetServices(services)).then( () => {
-      this.state.history.push('/dashboard')
+      this.state.history.push(`/${this.state.user.uid}/dashboard`)
     })
   }
   render() {
@@ -119,6 +148,51 @@ class RegisterSuccess extends React.Component {
           </select>
           <label>PM</label>
         </form>
+        <div>
+          <h3>Please specify your weekly availability</h3>
+          <input
+            type='checkbox'
+            id='sunday'
+            onClick={this.onDayClick}
+          />
+          <label>Sunday</label>
+          <input
+            type='checkbox'
+            id='monday'
+            onClick={this.onDayClick}
+          />
+          <label>Monday</label>
+          <input
+            type='checkbox'
+            id='tuesday'
+            onClick={this.onDayClick}
+          />
+          <label>Tuesday</label>
+          <input
+            type='checkbox'
+            id='wednesday'
+            onClick={this.onDayClick}
+          />
+          <label>Wednesday</label>
+          <input
+            type='checkbox'
+            id='thursday'
+            onClick={this.onDayClick}
+          />
+          <label>Thursday</label>
+          <input
+            type='checkbox'
+            id='friday'
+            onClick={this.onDayClick}
+          />
+          <label>Friday</label>
+          <input
+            type='checkbox'
+            id='saturday'
+            onClick={this.onDayClick}
+          />
+          <label>Saturday</label>
+        </div>
         <form>
           <h3>Please list the services you offer and their estimated completion time (in minutes)</h3>
           {this.state.nServices ? this.generateServicesInput() : ''}

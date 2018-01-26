@@ -12,6 +12,9 @@ const Settings = (props) => {
         </p>
         <p>Email: {props.auth.email}</p>
       </div>
+      <button onClick={ () => props.history.push(`/${props.auth.uid}/settings/availability`)}>
+        Set availability
+      </button>
     </div>
   )
 }

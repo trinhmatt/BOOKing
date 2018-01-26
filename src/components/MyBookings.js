@@ -81,7 +81,13 @@ class MyBookings extends React.Component {
     }
   }
   isDayBlocked = (day) => {
-    if (moment().isSame(day, 'day')) {
+    //day === every availible day
+    //need to check if day is equal to the days that the user has blocked
+    // if (moment().isSame(day, 'day')) {
+    //   console.log(day)
+    //   return true
+    // }
+    if (moment(day).format('ddd') === 'Sat' || moment(day).format('ddd') === 'Sun') {
       return true
     }
   }

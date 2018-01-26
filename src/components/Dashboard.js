@@ -16,6 +16,7 @@ class Dashboard extends React.Component {
       date: moment(),
       formattedDate: '',
       calendarFocused: false,
+      user: props.user,
       history: props.history,
       match: props.match,
       dispatch: props.dispatch
@@ -25,10 +26,6 @@ class Dashboard extends React.Component {
     //Get the correct bookings and settings for the user
     const uid = this.state.match.params.uid
     this.state.dispatch(startGetSettings(uid))
-
-    //Get the users displayName from firebase
-    const displayName = firebase.auth().UserInfo('displayName')
-    console.log
   }
   onDateChange = (date) => {
     const formattedDate = moment(date._d).format('YYYY/MM/DD')
@@ -41,16 +38,27 @@ class Dashboard extends React.Component {
   }
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ calendarFocused: focused }));
-  };
+  }
+  isDayBlocked = (day) => {
+
+    const dayString = moment(day).format('dddd').toLowerCase()
+
+    if (this.state.user.settings.availability[dayString]) {
+      return false
+    } else {
+      return true
+    }
+  }
   render() {
     return (
       <div className='dashboard'>
-        <h1>Dashboard</h1>
+        <h1>Book an appointment with {this.state.user.settings.displayName}</h1>
         <SingleDatePicker
           date={this.state.date}
           onDateChange={this.onDateChange}
           focused={this.state.calendarFocused}
           onFocusChange={this.onFocusChange}
+          isDayBlocked={this.isDayBlocked}
           numberOfMonths={1}
         />
       </div>
@@ -59,7 +67,7 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  users: state.users[props.match.params.uid]
+  user: state.users[props.match.params.uid]
 })
 
 export default connect(mapStateToProps, undefined)(Dashboard);

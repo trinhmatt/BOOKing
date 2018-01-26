@@ -11,7 +11,7 @@ const Register = (props) => (
         .then( (user) => {
           user.updateProfile({displayName: formUser.username})
             .then( () => {
-              props.history.push('/register/success')
+              props.history.push(`/register/success`)
             })
             .catch( (error) => {
               const errorCode = error.code;
@@ -26,13 +26,6 @@ const Register = (props) => (
         });
       }}/>
     </div>
-    <ul className="slideshow">
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
   </div>
 )
 
