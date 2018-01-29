@@ -40,10 +40,15 @@ class Dashboard extends React.Component {
     this.setState(() => ({ calendarFocused: focused }));
   }
   isDayBlocked = (day) => {
-
+    let isBlocked;
     const dayString = moment(day).format('dddd').toLowerCase()
+    const dateString = moment(day).format('MMM_DD_YYYY')
 
-    if (this.state.user.settings.availability[dayString]) {
+    //Check if the user set the specific day as unavailable before checking if
+    //the day is an operating day or not
+    if (this.state.user.settings.unavailableDays[dateString]) {
+      return true
+    } else if (this.state.user.settings.availability[dayString]){
       return false
     } else {
       return true

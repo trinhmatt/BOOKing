@@ -13,7 +13,7 @@ class MyBookings extends React.Component {
       bookingsSet: false,
       bookingsDict: [],
       bookingsToRender: [],
-      calendarDate: moment(),
+      calendarDate: null,
       selectedDate: null,
       calendarFocused: false
     }
@@ -59,6 +59,7 @@ class MyBookings extends React.Component {
 
       this.setState( () => ({selectedDate: dictDate, calendarDate}), this.filterBookings)
     } else {
+      this.setState( () => ({calendarDate: null}))
       this.setUpBookings()
     }
   }
@@ -80,17 +81,6 @@ class MyBookings extends React.Component {
       this.setState( () => ({bookingsToRender}))
     }
   }
-  isDayBlocked = (day) => {
-    //day === every availible day
-    //need to check if day is equal to the days that the user has blocked
-    // if (moment().isSame(day, 'day')) {
-    //   console.log(day)
-    //   return true
-    // }
-    if (moment(day).format('ddd') === 'Sat' || moment(day).format('ddd') === 'Sun') {
-      return true
-    }
-  }
   render() {
     return (
       <div>
@@ -103,7 +93,6 @@ class MyBookings extends React.Component {
           onFocusChange={this.onFocusChange}
           numberOfMonths={1}
           isOutsideRange={() => false}
-          isDayBlocked={this.isDayBlocked}
         />
         {this.state.bookingsToRender}
       </div>

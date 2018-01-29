@@ -108,7 +108,7 @@ class RegisterSuccess extends React.Component {
       displayName: this.state.user.displayName
     }
     this.state.dispatch(startSetServices(services)).then( () => {
-      this.state.history.push(`/${this.state.user.uid}/dashboard`)
+      this.state.history.push(`/redirect`)
     })
   }
   render() {

@@ -16,6 +16,14 @@ export default (state = {}, action) => {
       }
     case 'GET_SETTINGS':
       return {...action.settings}
+    case 'DISABLE_BOOKINGS':
+      return {
+        ...state,
+        [action.uid]: {
+          ...state[action.uid],
+          unavailableDays: action.unavailableDays
+        }
+      }
     default:
       return state;
   }

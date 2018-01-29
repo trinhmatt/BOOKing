@@ -56,3 +56,19 @@ export const startCreateBooking = (booking, uid) => {
     return database.ref(`users/${uid}/bookings/${booking.date}`).update(databaseBooking)
   }
 }
+
+export const disableBookings = (unavailableDays, uid) => ({
+  type: 'DISABLE_BOOKINGS',
+  unavailableDays,
+  uid
+})
+
+export const startDisableBookings = (unavailableDays, uid) => {
+  return (dispatch) => {
+    return database.ref(`users/${uid}/settings/unavailableDays`).update(unavailableDays).then(
+      () => {
+        dispatch(disableBookings(unavailableDays, uid))
+      }
+    )
+  }
+}
