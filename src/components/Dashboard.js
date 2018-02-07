@@ -23,6 +23,11 @@ class Dashboard extends React.Component {
     }
   }
   componentDidMount() {
+    //Reload to fetch the correct settings from database
+    if (!this.state.user.settings) {
+      window.location.reload()
+    }
+
     //Get the correct bookings and settings for the user
     const uid = this.state.match.params.uid
     this.state.dispatch(startGetSettings(uid))
@@ -44,10 +49,18 @@ class Dashboard extends React.Component {
     const dayString = moment(day).format('dddd').toLowerCase()
     const dateString = moment(day).format('MMM_DD_YYYY')
 
-    //Check if the user set the specific day as unavailable before checking if
-    //the day is an operating day or not
-    if (this.state.user.settings.unavailableDays[dateString]) {
-      return true
+    //Check if the user has set any days as unavailable
+    //If not check regular operating hours
+    if (this.state.user.settings.unavailableDays) {
+      //Check if the user set the specific day as unavailable before checking if
+      //the day is an operating day or not
+      if (this.state.user.settings.unavailableDays[dateString]) {
+        return true
+      } else if (this.state.user.settings.availability[dayString]){
+        return false
+      } else {
+        return true
+      }
     } else if (this.state.user.settings.availability[dayString]){
       return false
     } else {
@@ -57,7 +70,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div className='dashboard'>
-        <h1>Book an appointment with {this.state.user.settings.displayName}</h1>
+        <h1>Book an appointment with {this.state.user.settings ? this.state.user.settings.displayName : ''}</h1>
         <SingleDatePicker
           date={this.state.date}
           onDateChange={this.onDateChange}

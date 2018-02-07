@@ -3,7 +3,7 @@ import moment from 'moment'
 import {connect} from 'react-redux'
 import { startCreateBooking } from '../actions/users'
 
-class TestBookings extends React.Component {
+class CreateBookings extends React.Component {
   constructor(props) {
     super(props);
 
@@ -67,20 +67,60 @@ class TestBookings extends React.Component {
       }
     }
 
-    this.setState( (prevState) => ({
-      availableTimes,
-      timesSet: true,
-      booking: {
-        ...prevState.booking,
-        service: {
-          service: prevState.selectedService[0],
-          time: ''
+    //Check if there are available times, do not render form and submit button if none
+    if (availableTimes.length > 0) {
+      this.setState( (prevState) => ({
+        availableTimes,
+        timesSet: true,
+        booking: {
+          ...prevState.booking,
+          service: {
+            service: prevState.selectedService[0],
+            time: ''
+          },
+          date: databaseDate
         },
-        date: databaseDate
-      },
-      displayDate
-    }))
-
+        displayDate
+      }))
+    } else {
+      this.setState( (prevState) => ({
+        availableTimes,
+        timesSet: true,
+        booking: {
+          ...prevState.booking,
+          service: {
+            service: prevState.selectedService[0],
+            time: ''
+          },
+          date: databaseDate
+        },
+        displayDate,
+        noTimesAvailable: true
+      }))
+    }
+  }
+  setAvailableTimes = () => {
+    const availableTimes = this.state.availableTimes.map( (time) => (
+      <div key={time}>
+        <input
+          type='radio'
+          value={time}
+          name='time'
+          onClick={this.onTimeSelect}
+        />
+        <p>{time}</p>
+      </div>
+    ))
+    if (availableTimes.length === 0) {
+      return (
+        <div>
+          <h2>There are no available times today</h2>
+          <p>Please return to the dashboard to select a new time.</p>
+        </div>
+      )
+    } else {
+      return availableTimes
+    }
   }
   onNameChange = (e) => {
     const name = e.target.value
@@ -129,9 +169,16 @@ class TestBookings extends React.Component {
     }))
   }
   onSubmitBooking = () => {
-    if (this.state.booking.client.email && this.state.booking.client.name) {
+    const emailRegTest = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+    if (this.state.booking.client.email && this.state.booking.client.name && this.state.booking.service.time) {
+
+      if (!emailRegTest.test(this.state.booking.client.email)) {
+        return this.setState( () => ({error: 'Please enter a valid email address'}))
+      }
+
       //message_html for booking_template = the time of the appointment
       //..For new_appointment = Name and email of the client
+      //TO DO: Connect the Gmail API to the service
 
       let bookingDetails = (
         `${this.state.booking.service.service.service} on ${this.state.displayDate} at ${this.state.booking.service.time}`
@@ -141,25 +188,27 @@ class TestBookings extends React.Component {
         bookingDetails += ` (${this.state.booking.client.phoneNumber})`
       }
 
-      emailjs.send('gmail', 'booking_template', {
-        "to_email": this.state.booking.client.email,
-        "from_name": this.state.auth.displayName,
-        "to_name": this.state.booking.client.name,
-        "message_html": this.state.booking.service.time
-      })
-
-      emailjs.send('gmail', 'new_appointment', {
-        "to_email": this.state.auth.email,
-        "from_name": this.state.booking.client.name,
-        "to_name": this.state.auth.displayName,
-        "message_html": bookingDetails
-      })
+      // emailjs.send('gmail', 'booking_template', {
+      //   "to_email": this.state.booking.client.email,
+      //   "from_name": this.state.auth.displayName,
+      //   "to_name": this.state.booking.client.name,
+      //   "message_html": this.state.booking.service.time
+      // })
+      //
+      // emailjs.send('gmail', 'new_appointment', {
+      //   "to_email": this.state.auth.email,
+      //   "from_name": this.state.booking.client.name,
+      //   "to_name": this.state.auth.displayName,
+      //   "message_html": bookingDetails
+      // })
 
       this.state.dispatch(startCreateBooking(this.state.booking, this.state.user.settings.uid)).then( () => {
         this.state.history.push(`/${this.state.user.settings.uid}/confirmation`)
       })
-    } else {
+    } else if (!this.state.booking.client.email || !this.state.booking.client.name){
       this.setState( () => ({error: 'Please provide your email and name'}))
+    } else {
+      this.setState( () => ({error: 'Please select a time'}))
     }
   }
   render() {
@@ -169,40 +218,34 @@ class TestBookings extends React.Component {
           Bookings for {this.state.displayDate}
         </h1>
         <p>{this.state.error}</p>
+        {this.state.noTimesAvailable ? '' : (
+          <form>
+            <input
+              type='text'
+              placeholder='Name'
+              value={this.state.booking.client.name}
+              onChange={this.onNameChange}
+            />
+            <input
+              type='text'
+              placeholder='Email'
+              value={this.state.booking.client.email}
+              onChange={this.onEmailChange}
+            />
+            <input
+              type='text'
+              placeholder='Phone Number (Optional)'
+              value={this.state.booking.client.phoneNumber}
+              onChange={this.onPhoneChange}
+            />
+          </form>
+        )}
         <form>
-          <input
-            type='text'
-            placeholder='Name'
-            value={this.state.booking.client.name}
-            onChange={this.onNameChange}
-          />
-          <input
-            type='text'
-            placeholder='Email'
-            value={this.state.booking.client.email}
-            onChange={this.onEmailChange}
-          />
-          <input
-            type='text'
-            placeholder='Phone Number (Optional)'
-            value={this.state.booking.client.phoneNumber}
-            onChange={this.onPhoneChange}
-          />
+          {this.state.timesSet ? this.setAvailableTimes() : ''}
         </form>
-        <form>
-          {this.state.timesSet ? (this.state.availableTimes.map( (time) => (
-            <div key={time}>
-              <input
-                type='radio'
-                value={time}
-                name='time'
-                onClick={this.onTimeSelect}
-              />
-              <p>{time}</p>
-            </div>
-          ))) : ''}
-        </form>
-        <button onClick={this.onSubmitBooking}>Submit Booking</button>
+        {this.state.noTimesAvailable ? '' : (
+          <button onClick={this.onSubmitBooking}>Submit Booking</button>
+        )}
       </div>
     )
   }
@@ -212,4 +255,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, undefined)(TestBookings)
+export default connect(mapStateToProps, undefined)(CreateBookings)

@@ -1,6 +1,7 @@
 import React from 'react'
 import {firebase} from '../firebase/firebase'
 import UserForm from './UserForm'
+import { startLogin } from '../actions/auth'
 
 const Register = (props) => (
   <div className='login-page'>

@@ -9,6 +9,7 @@ class RegisterSuccess extends React.Component {
 
     this.state = {
       user: firebase.auth().currentUser,
+      auth: props.auth,
       startTime: '',
       endTime: '',
       services: [],
@@ -108,7 +109,7 @@ class RegisterSuccess extends React.Component {
       displayName: this.state.user.displayName
     }
     this.state.dispatch(startSetServices(services)).then( () => {
-      this.state.history.push(`/redirect`)
+      this.state.history.push(`/${this.state.user.uid}/dashboard`)
     })
   }
   render() {
@@ -217,5 +218,8 @@ class RegisterSuccess extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
 
-export default connect(undefined, undefined)(RegisterSuccess)
+export default connect(mapStateToProps, undefined)(RegisterSuccess)

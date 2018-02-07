@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import TestBookings from './TestBookings'
+import CreateBookings from './CreateBookings'
 
 class ServiceSelect extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class ServiceSelect extends React.Component {
       <div>
         {this.state.isSelected ? (
           <div>
-            <TestBookings
+            <CreateBookings
               user={this.state.user}
               selectedService={this.state.selectedService}
               match={this.state.match}

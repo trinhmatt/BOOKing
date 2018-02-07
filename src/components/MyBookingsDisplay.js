@@ -11,15 +11,17 @@ class MyBookingsDisplay extends React.Component {
       allBookings: ''
     }
   }
+  cancelBooking = () => {
+    this.setState( () => ({openCancelModal: true}))
+  }
   componentDidMount() {
     let allBookings = [];
     for (let time in this.state.booking) {
 
-      
-
       const bookingJSX = (
         <div key={time}>
           <h2>{time}</h2>
+          <button onClick={this.cancelBooking}>Cancel Booking</button>
           <p>
             Service: {this.state.booking[time].service.service}
           </p>
