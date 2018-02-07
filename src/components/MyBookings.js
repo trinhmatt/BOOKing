@@ -15,7 +15,9 @@ class MyBookings extends React.Component {
       bookingsToRender: [],
       calendarDate: null,
       selectedDate: null,
-      calendarFocused: false
+      calendarFocused: false,
+      history: props.history,
+      uid: props.uid
     }
   }
   componentDidMount() {
@@ -34,6 +36,8 @@ class MyBookings extends React.Component {
         <MyBookingsDisplay
           date={formattedDate}
           booking={this.state.bookings[date]}
+          history={this.state.history}
+          uid={this.state.uid}
           key={date}
         />
         )
@@ -43,6 +47,8 @@ class MyBookings extends React.Component {
         (<MyBookingsDisplay
           date={formattedDate}
           booking={this.state.bookings[date]}
+          history={this.state.history}
+          uid={this.state.uid}
           key={date}
         />)
       )
@@ -101,7 +107,8 @@ class MyBookings extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  users: state.users[props.match.params.uid]
+  users: state.users[props.match.params.uid],
+  uid: props.match.params.uid
 })
 
 export default connect(mapStateToProps)(MyBookings);

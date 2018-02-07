@@ -72,3 +72,13 @@ export const startDisableBookings = (unavailableDays, uid) => {
     )
   }
 }
+
+export const startCancelBooking = (booking, uid) => {
+  return (dispatch) => {
+    return database.ref(`users/${uid}/bookings/${booking.date}/${booking.time}`).remove().then(
+      () => {
+        dispatch(startGetSettings())
+      }
+    )
+  }
+}

@@ -14,6 +14,7 @@ import ServiceSelectPage from '../components/ServiceSelectPage'
 import BookingConfirmation from '../components/BookingConfirmation'
 import SetAvailability from '../components/SetAvailability'
 import SetAvailabilitySuccess from '../components/SetAvailabilitySuccess'
+import CancelConfirmation from '../components/CancelConfirmation'
 
 
 export const history = createHistory();
@@ -26,7 +27,8 @@ const AppRouter = () => (
         <PublicRoute path='/:uid/dashboard' component={Dashboard} exact={true} />
         <PublicRoute path='/:uid/:year/:month/:day/selectservice' component={ServiceSelectPage} />
         <PublicRoute path='/:uid/confirmation' component={BookingConfirmation} />
-        <PrivateRoute path='/:uid/bookings' component={MyBookings} />
+        <PrivateRoute path='/:uid/bookings' component={MyBookings} exact={true} />
+        <PrivateRoute path='/:uid/bookings/cancel' component={CancelConfirmation} />
         <Route path='/register' component={Register} exact={true} />
         <PrivateRoute path='/register/success' component={RegisterSuccess} />
         <PrivateRoute path='/:uid/settings' component={Settings} exact={true} />
