@@ -71,6 +71,7 @@ class Dashboard extends React.Component {
     return (
       <div className='dashboard'>
         <h1>Book an appointment with {this.state.user.settings ? this.state.user.settings.displayName : ''}</h1>
+        <h2>Click on the calendar to select an available date.</h2>
         <SingleDatePicker
           date={this.state.date}
           onDateChange={this.onDateChange}

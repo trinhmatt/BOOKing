@@ -21,10 +21,6 @@ class Header extends React.Component {
     const uid = this.state.match.params.uid
     this.setState(() => ({activeItem: name}), this.state.history.push(`/${uid}/dashboard`))
   }
-  onBookingsClick = (e, {name}) => {
-    const uid = this.state.match.params.uid
-    this.setState(() => ({activeItem: name}), this.state.history.push(`/${uid}/bookings`))
-  }
   onSignUp = () => {
     this.state.history.push('/register')
   }
@@ -38,11 +34,11 @@ class Header extends React.Component {
             {!this.state.auth.uid ? <Button onClick={this.onSignUp} primary>Sign Up</Button>
               : <Dropdown item text={this.state.auth.displayName || 'Anonymous'}>
                   <Dropdown.Menu>
-                    <Dropdown.Item>
-                      <Link to={`/${this.state.auth.uid}/bookings`}>My Bookings</Link>
+                    <Dropdown.Item onClick={ () => this.state.history.push(`/${this.state.auth.uid}/bookings`)}>
+                      My Bookings
                     </Dropdown.Item>
-                    <Dropdown.Item>
-                      <Link to={`/${this.state.auth.uid}/settings`}>Settings</Link>
+                    <Dropdown.Item onClick={ () => this.state.history.push(`/${this.state.auth.uid}/settings`)}>
+                      Settings
                     </Dropdown.Item>
                     <Dropdown.Item onClick={this.state.startLogOut}>Logout</Dropdown.Item>
                   </Dropdown.Menu>

@@ -28,8 +28,10 @@ class Login extends React.Component {
       <div className='login-page'>
         <div id='icon'></div>
         <div id='landing-header'>
-          <h2>BOOKing.</h2>
-          <p>Create and manage your appointments, thereby making the world a better place.</p>
+          <div id='title-slogan'>
+            <h2>BOOKing.</h2>
+            <p>Create and manage your appointments with ease.</p>
+          </div>
           <Link className='register-link' to='/register'>Register</Link>
           <UserForm onSubmit={(user) => {
             const email = user.email

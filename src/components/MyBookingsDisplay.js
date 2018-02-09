@@ -28,7 +28,7 @@ class MyBookingsDisplay extends React.Component {
 
     for (let time in this.state.booking) {
       const bookingJSX = (
-        <div key={time}>
+        <div key={time} id='booking-time'>
           <h2>{time}</h2>
           <button id={time} onClick={this.openModal}>Cancel Booking</button>
           <p>
@@ -75,8 +75,8 @@ class MyBookingsDisplay extends React.Component {
   }
   render() {
     return (
-      <div>
-        <h1>{this.state.date}</h1>
+      <div id='booking-date'>
+        <h1 id='booking-date-h1'>{this.state.date}</h1>
         {this.state.allBookings}
         <Modal
           isOpen={this.state.isModalOpen}

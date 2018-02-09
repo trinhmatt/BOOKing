@@ -13,8 +13,9 @@ class MyBookings extends React.Component {
       bookingsSet: false,
       bookingsDict: [],
       bookingsToRender: [],
-      calendarDate: null,
-      selectedDate: null,
+      noBookings: false,
+      calendarDate: moment(),
+      selectedDate: moment(),
       calendarFocused: false,
       history: props.history,
       uid: props.uid
@@ -22,6 +23,7 @@ class MyBookings extends React.Component {
   }
   componentDidMount() {
     this.setUpBookings();
+    this.filterBookings();
   }
   setUpBookings = () => {
     let bookingsDict = [];
@@ -55,7 +57,7 @@ class MyBookings extends React.Component {
     }
     //So the most recent bookings appear first
     bookingsToRender.reverse()
-    this.setState( () => ({bookingsDict, bookingsToRender}))
+    this.setState( () => ({bookingsDict, bookingsToRender, noBookings: false}))
   }
   onDateChange = (date) => {
     if (date) {
@@ -80,17 +82,22 @@ class MyBookings extends React.Component {
     if (!!filteredDict[0]) {
       const bookingsToRender = [(filteredDict[0][this.state.selectedDate])]
 
-      this.setState( () => ({bookingsToRender}))
+      this.setState( () => ({bookingsToRender, noBookings: false}))
     } else {
       const bookingsToRender = []
 
-      this.setState( () => ({bookingsToRender}))
+      if (bookingsToRender.length === 0) {
+        this.setState( () => ({bookingsToRender, noBookings: true}))
+      } else {
+        this.setState( () => ({bookingsToRender, noBookings: false}))
+      }
     }
   }
   render() {
     return (
-      <div>
+      <div id='my-bookings'>
         <h1>My Bookings</h1>
+        <h2>Filter by date: </h2>
         <SingleDatePicker
           date={this.state.calendarDate}
           showClearDate={true}
@@ -101,6 +108,11 @@ class MyBookings extends React.Component {
           isOutsideRange={() => false}
         />
         {this.state.bookingsToRender}
+        {this.state.noBookings ? (
+          <h2>
+            You have no bookings for {moment(this.state.calendarDate).format('MMMM Do, YYYY')}
+          </h2>
+        ) : ''}
       </div>
     )
   }

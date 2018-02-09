@@ -6,7 +6,7 @@ html {
 
 body {
   font-family: Lato, "Helvetica Neue", Arial, Helvetica, sans-serif;
-  background-color: white;
+  background-color: $faded-blue;
   font-size: $m-size;
   padding: 0;
   color: black;
@@ -30,4 +30,8 @@ button:disabled {
 
 i {
   cursor: pointer;
+}
+
+.ui.blue.massive.inverted.stackable.nav-header.menu {
+  margin-bottom: 0;
 }
