@@ -55,7 +55,7 @@ class MyBookings extends React.Component {
         />)
       )
     }
-    //So the most recent bookings appear first
+    //So the most recent bookings appear first if the user opts to display all bookings
     bookingsToRender.reverse()
     this.setState( () => ({bookingsDict, bookingsToRender, noBookings: false}))
   }

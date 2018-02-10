@@ -62,7 +62,7 @@ class MyBookingsDisplay extends React.Component {
     this.setState( () => ({modalInfo, isModalOpen: true}))
   }
   closeModal = (e) => {
-    this.setState( (prevState) => ({isModalOpen: false}))
+    this.setState( () => ({isModalOpen: false}))
   }
   confirmCancel = () => {
     const booking = {
