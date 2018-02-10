@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 const PublicRoute = ({isAuth, component: Component, ...rest}) => (
   <Route {...rest} component={ (props) => (
       <div>
-        {isAuth ? <Header /> : ''}
+        <Header />
         <Component {...props}/>
         <Footer />
       </div>

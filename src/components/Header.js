@@ -24,6 +24,9 @@ class Header extends React.Component {
   onSignUp = () => {
     this.state.history.push('/register')
   }
+  onLogin = () => {
+    this.state.history.push('/')
+  }
   render() {
     const {activeItem} = this.state
     return (
@@ -31,7 +34,11 @@ class Header extends React.Component {
           <Menu.Item name='Home' active={activeItem === 'home'} onClick={this.onHomeClick}/>
           <p id='header-brand'></p>
           <Menu.Menu position='right'>
-            {!this.state.auth.uid ? <Button onClick={this.onSignUp} primary>Sign Up</Button>
+            {!this.state.auth.uid ?
+              <Button.Group primary>
+                <Button onClick={this.onSignUp}>Sign Up</Button>
+                <Button onClick={this.onLogin}>Log in</Button>
+              </Button.Group>
               : <Dropdown item text={this.state.auth.displayName || 'Anonymous'}>
                   <Dropdown.Menu>
                     <Dropdown.Item onClick={ () => this.state.history.push(`/${this.state.auth.uid}/bookings`)}>

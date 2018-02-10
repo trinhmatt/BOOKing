@@ -23,7 +23,7 @@ class Dashboard extends React.Component {
     }
   }
   componentDidMount() {
-    //Reload to fetch the correct settings from database
+    //Reload to fetch the correct settings from database if user just created the account
     if (!this.state.user.settings) {
       window.location.reload()
     }
@@ -71,7 +71,8 @@ class Dashboard extends React.Component {
     return (
       <div className='dashboard'>
         <h1>Book an appointment with {this.state.user.settings ? this.state.user.settings.displayName : ''}</h1>
-        <h2>Click on the calendar to select an available date.</h2>
+        <div id='dashboard-line-break'></div>
+        <h2>Click on the calendar to select an available date</h2>
         <SingleDatePicker
           date={this.state.date}
           onDateChange={this.onDateChange}

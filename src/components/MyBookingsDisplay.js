@@ -20,7 +20,8 @@ class MyBookingsDisplay extends React.Component {
       },
       history: props.history,
       dispatch: props.dispatch,
-      uid: props.uid
+      uid: props.uid,
+      user: props.user
     }
   }
   componentDidMount() {
@@ -56,6 +57,7 @@ class MyBookingsDisplay extends React.Component {
     const booking = this.state.booking[time]
     const modalInfo = {
       client: booking.client.name,
+      email: booking.client.email,
       time
     }
 
@@ -69,6 +71,14 @@ class MyBookingsDisplay extends React.Component {
       date: moment(this.state.date, 'MMM Do, YYYY').format('YYYYMMMDD'),
       time: this.state.modalInfo.time
     }
+
+    // emailjs.send('gmail', 'cancel_confirmation', {
+    //   "to_email": this.state.modalInfo.email,
+    //   "from_name": this.state.user.displayName,
+    //   "to_name": this.state.modalInfo.client,
+    //   "cancel_date": this.state.date
+    // })
+
     this.state.dispatch(startCancelBooking(booking, this.state.uid))
     this.state.history.push(`/${this.state.uid}/bookings/cancel`)
 
@@ -94,4 +104,8 @@ class MyBookingsDisplay extends React.Component {
   }
 }
 
-export default connect(undefined)(MyBookingsDisplay);
+const mapStateToProps = (state) => ({
+  user: state.auth
+})
+
+export default connect(mapStateToProps)(MyBookingsDisplay);
