@@ -1,0 +1,125 @@
+#landing-header {
+  background-color: $blue;
+  height: 100vh;
+  padding-top: 10vh;
+}
+
+#icon {
+  background-image: url('https://i.imgur.com/Z5lGabz.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: $blue;
+  height: 50vh;
+  width: 50vh;
+  margin: 0 auto;
+}
+
+#title-slogan {
+  background: rgba(255,255,255,0.3);
+  width: 70vh;
+  margin: 0 auto;
+  padding: 2.5vh;
+  text-align: center;
+
+}
+
+#landing-title-h1 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: $xl-size;
+}
+
+#landing-title-h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+}
+
+#site-info {
+  margin: 0;
+  height: 45vh;
+  background-image: url('https://i.imgur.com/HHWzJwm.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: -22vw;
+}
+
+#site-info-text {
+  width: 70%;
+  text-align: justify;
+  color: $off-white;
+  padding: 2rem;
+  margin-left: 25vh;
+  line-height: 3rem;
+  margin-top: 3vh;
+}
+
+#about-us {
+  padding-top: 7vh;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  font-size: $xl-size;
+}
+
+#site-features-container {
+  height: 90vh;
+  background-color: $blue;
+}
+
+#site-features-title {
+  font-size: 6rem;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 100;
+  text-align: center;
+  padding: 7rem 0 7rem 0;
+}
+
+.site-feature {
+  font-size: $l-size;
+  margin-left: 45vw;
+}
+
+.site-feature p {
+  margin-left: 4rem;
+  line-height: 1;
+}
+
+#feature-checkmark {
+  float: left;
+}
+
+#features-calendar {
+  font-size: 30rem;
+  float: left;
+  margin-left: 15vw;
+}
+
+#site-features {
+  padding-top: 7rem;
+}
+
+#landing-buttons {
+  padding-top: 8vh;
+  text-align: center;
+}
+
+#landing-buttons button:first-child {
+  margin-right: 3vh;
+}
+
+.landing-button {
+  background: white;
+  outline: none;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  color: $blue;
+  padding: 2vh;
+}
+
+.landing-button:hover {
+  background: $blue;
+  outline: none;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  color: white;
+}

@@ -6,29 +6,6 @@
   padding-top: 10vh;
 }
 
-#title-slogan {
-  background: rgba(255,255,255,0.3);
-  width: 60vh;
-  margin: 0 auto;
-  padding: 2.5vh;
-}
-
-#landing-information {
-  background: white;
-  text-align: center;
-  color: $blue;
-}
-
-#icon {
-  background-image: url('https://i.imgur.com/Z5lGabz.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-color: $blue;
-  height: 30vh;
-  width: 30vh;
-  margin: 0 auto;
-}
-
 .login-page input {
   outline: none;
   border: none;

@@ -36,13 +36,13 @@ firebase.auth().onAuthStateChanged( (user) => {
     //Users cannot go anywhere without this line
     store.dispatch(logIn(user.uid, user.displayName, user.email))
     renderApp()
-    if (history.location.pathname === '/') {
+    if (history.location.pathname === '/login') {
       history.push(`/${user.uid}/dashboard`)
     }
   } else {
 
     //Check if a user signed out, if they did redirect to the landing
-    //Need this so that anonymous users can still create bookings 
+    //Need this so that anonymous users can still create bookings
     if (!!store.getState().auth.wasLoggedIn) {
       history.push('/')
       renderApp();

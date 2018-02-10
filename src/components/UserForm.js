@@ -57,7 +57,7 @@ class UserForm extends React.Component {
     return (
       <div>
         <form className='user-form' onSubmit={this.onSubmit}>
-          {this.state.history.location.pathname === '/' ? <div>
+          {this.state.history.location.pathname === '/login' ? <div>
             <p>Remember Me</p>
             <input
               type='checkbox'
@@ -83,7 +83,7 @@ class UserForm extends React.Component {
             value={this.state.password}
             onChange={this.onPasswordChange}
           />
-          <button>{this.state.history.location.pathname === '/' ? 'Log In' : 'Register'}</button>
+          <button>{this.state.history.location.pathname === '/login' ? 'Log In' : 'Register'}</button>
         </form>
       </div>
     )

@@ -4,6 +4,7 @@ import { Router, Route, Switch } from 'react-router-dom'
 import { Redirect } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute'
 import PublicRoute from './PublicRoute'
+import Landing from '../components/Landing'
 import Dashboard from '../components/Dashboard'
 import Register from '../components/Register'
 import RegisterSuccess from '../components/RegisterSuccess'
@@ -23,7 +24,8 @@ const AppRouter = () => (
   <Router history={history}>
     <div>
       <Switch>
-        <Route path='/' component={Login} exact={true} />
+        <Route path='/' component={Landing} exact={true} />
+        <Route path='/login' component={Login} />
         <PublicRoute path='/:uid/dashboard' component={Dashboard} exact={true} />
         <PublicRoute path='/:uid/:year/:month/:day/selectservice' component={ServiceSelectPage} />
         <PublicRoute path='/:uid/confirmation' component={BookingConfirmation} />
