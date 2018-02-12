@@ -4,9 +4,10 @@ import UserForm from './UserForm'
 import { startLogin } from '../actions/auth'
 
 const Register = (props) => (
-  <div className='login-page'>
-    <div id='landing-header'>
-      <h2>Register</h2>
+  <div id='register-container'>
+    <div id='small-icon'></div>
+    <div id='register'>
+      <h1>Register</h1>
       <UserForm onSubmit={ (formUser) => {
         firebase.auth().createUserWithEmailAndPassword(formUser.email, formUser.password)
         .then( (user) => {

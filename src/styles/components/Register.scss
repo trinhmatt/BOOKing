@@ -1,0 +1,21 @@
+#register {
+  width: 70%;
+  text-align: center;
+  background-color: $off-white;
+  margin: 0 auto;
+  width: 70%;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  border-radius: 1rem;
+}
+
+#register-container {
+  background-color: $blue;
+  height: 100vh;
+  padding-top: 10vh;
+}
+
+#register h1 {
+  color: $blue;
+  margin-bottom: 2vh;
+}

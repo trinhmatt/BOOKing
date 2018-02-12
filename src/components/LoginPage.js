@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { startLogin } from '../actions/auth'
 import UserForm from './UserForm'
@@ -26,19 +25,15 @@ class Login extends React.Component {
   render() {
     return (
       <div className='login-page'>
-        <div id='icon'></div>
-        <div id='landing-header'>
-          <div id='title-slogan'>
-            <h2>BOOKing.</h2>
-            <p>Create and manage your appointments with ease.</p>
-          </div>
-          <Link className='register-link' to='/register'>Register</Link>
-          <UserForm onSubmit={(user) => {
-            const email = user.email
-            const password = user.password
-            const rememberMe = user.rememberMe
-            this.state.startLogin(email, password, rememberMe)
-          }}/>
+        <div id='small-icon'></div>
+        <div id='user-form'>
+            <h1 style={{marginBottom: 2 + 'vh'}}>BOOKing.</h1>
+            <UserForm onSubmit={(user) => {
+              const email = user.email
+              const password = user.password
+              const rememberMe = user.rememberMe
+              this.state.startLogin(email, password, rememberMe)
+            }}/>
         </div>
       </div>
     )

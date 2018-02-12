@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
@@ -57,8 +58,9 @@ class UserForm extends React.Component {
     return (
       <div>
         <form className='user-form' onSubmit={this.onSubmit}>
-          {this.state.history.location.pathname === '/login' ? <div>
-            <p>Remember Me</p>
+          {this.state.history.location.pathname === '/login' ? <div style={{marginBottom: 2 + 'vh'}}>
+            <Link className='register-link' to='/register'>Register</Link>
+            <label style={{marginRight: 1 + 'vw'}}>Remember Me</label>
             <input
               type='checkbox'
               value={this.state.rememberMe}
@@ -70,18 +72,21 @@ class UserForm extends React.Component {
             placeholder='username'
             value={this.state.username}
             onChange={this.onUsernameChange}
+            className='user-form-text-input'
           />}
           <input
             type='text'
             placeholder='email'
             value={this.state.email}
             onChange={this.onEmailChange}
+            className='user-form-text-input'
           />
           <input
             type='password'
             placeholder='password'
             value={this.state.password}
             onChange={this.onPasswordChange}
+            className='user-form-text-input'
           />
           <button>{this.state.history.location.pathname === '/login' ? 'Log In' : 'Register'}</button>
         </form>

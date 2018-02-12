@@ -1,9 +1,19 @@
 .login-page {
   background-color: $blue;
-  color: white;
+  color: $blue;
   height: 100vh;
   text-align: center;
   padding-top: 10vh;
+}
+
+#small-icon {
+  background-image: url('https://i.imgur.com/Z5lGabz.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: $blue;
+  height: 25vh;
+  width: 25vh;
+  margin: 0 auto;
 }
 
 .login-page input {
@@ -12,7 +22,7 @@
   border-radius: 0.5rem;
 }
 
-.login-page button {
+form.user-form button {
   outline: 1px solid $blue;
   border: none;
   background-color: white;
@@ -21,9 +31,51 @@
 }
 
 .register-link {
-  color: white;
+  color: $blue;
+  font-size: 3vh;
+  font-weight: 100;
+  margin-right: 2vw;
 }
 
 .register-link:hover {
-  color: $light-grey
+  color: $dark-blue;
+}
+
+#user-form {
+  background-color: $off-white;
+  margin: 0 auto;
+  width: 70%;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  border-radius: 1rem;
+}
+
+form.user-form .user-form-text-input {
+    display: grid;
+    margin-left: 10%;
+    width: 80%;
+    padding: 2vh;
+    margin-bottom: 1vh;
+    background: $light-grey;
+    border: 1px solid rgba(255,255,255,0);
+    outline: none;
+    border-radius: 0.5rem;
+}
+
+form.user-form .user-form-text-input:focus {
+    border: 1px solid $blue;
+    background: white;
+}
+
+form.user-form button {
+  margin-left: 25%;
+  width: 80%;
+  margin: 0;
+  outline: none;
+  background-color: $blue;
+  color: white;
+}
+
+form.user-form button:hover {
+  background: $dark-blue;
 }
