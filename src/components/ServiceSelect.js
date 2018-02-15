@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import {connect} from 'react-redux'
 import CreateBookings from './CreateBookings'
 
@@ -27,7 +28,7 @@ class ServiceSelect extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div id='service-select'>
         {this.state.isSelected ? (
           <div>
             <CreateBookings
@@ -39,10 +40,10 @@ class ServiceSelect extends React.Component {
           </div>
         ) : (
           <div>
-            <h1>Service Select</h1>
+            <h1 style={{paddingTop: (2 + 'vh'), marginBottom: 2 + 'vh'}}>Service Select</h1>
             <form onSubmit={this.onServiceSubmit}>
               {this.state.user.settings.services.map( (service) => (
-                <div key={service.service}>
+                <div id='service-input' key={service.service}>
                   <input
                     type='radio'
                     name='service'
@@ -53,7 +54,7 @@ class ServiceSelect extends React.Component {
                   <label htmlFor={service.service}> {service.service} ({service.requiredTime} minutes)</label>
                 </div>
                 ))}
-              <button>Select</button>
+              <button disabled={!this.state.selectedService}>Select</button>
             </form>
           </div>
         )}

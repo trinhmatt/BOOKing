@@ -11,7 +11,11 @@ export const logIn = (uid, displayName, email) => ({
 export const startLogin = (email, password, rememberMe) => {
   return (dispatch) => {
     if (rememberMe) {
-      firebase.auth().signInWithEmailAndPassword(email, password)
+      firebase.auth().signInWithEmailAndPassword(email, password).then( (user) => {
+        const uid = user.uid
+        const displayName = user.displayName
+        const email = user.email
+      })
         .catch( (error) => {
           console.log(error.code, error.message)
         })

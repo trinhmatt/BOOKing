@@ -1,0 +1,37 @@
+#client-info input {
+  outline: none;
+  border: none;
+  border-radius: 1rem;
+  padding: 2vh;
+  margin-bottom: 2vh;
+  background: $medium-grey;
+}
+
+#client-info input:hover {
+  background: $light-grey;
+}
+
+#client-info input:focus {
+  background: white;
+}
+
+#previous-day {
+  margin-right: 0.5vw;
+}
+
+#next-day {
+  margin-left: 0.5vw;
+}
+
+.available-times {
+  padding-bottom: 2vh;
+}
+
+.available-times input {
+  float: left;
+}
+
+.available-times p {
+  float: left;
+  margin-left: 1vw;
+}

@@ -27,10 +27,6 @@ class Dashboard extends React.Component {
     if (!this.state.user.settings) {
       window.location.reload()
     }
-
-    //Get the correct bookings and settings for the user
-    const uid = this.state.match.params.uid
-    this.state.dispatch(startGetSettings(uid))
   }
   onDateChange = (date) => {
     const formattedDate = moment(date._d).format('YYYY/MM/DD')

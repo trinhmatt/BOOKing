@@ -25,7 +25,7 @@ class Header extends React.Component {
     this.state.history.push('/register')
   }
   onLogin = () => {
-    this.state.history.push('/')
+    this.state.history.push('/login')
   }
   render() {
     const {activeItem} = this.state

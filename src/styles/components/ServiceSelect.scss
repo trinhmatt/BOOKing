@@ -1,0 +1,41 @@
+#service-select {
+  width: 80%;
+  min-height: 70vh;
+  margin: 10vh auto;
+  text-align: center;
+  background: $blue;
+  border-radius: 1vh;
+}
+
+#service-select form {
+  text-align: left;
+  display: grid;
+  width: 50%;
+  margin: 0 auto;
+}
+
+#service-select button {
+  outline: 1px solid $blue;
+  border: none;
+  background-color: white;
+  color: $blue;
+  border-radius: 0.5rem;
+  margin-top: 1vh;
+  padding: 1vh;
+}
+
+#service-select button:hover {
+  outline: 1px solid $blue;
+  border: none;
+  background-color: $light-grey;
+  color: $blue;
+  border-radius: 0.5rem;
+}
+
+#service-select button:disabled {
+  outline: 1px solid $blue;
+  border: none;
+  background-color: rgba(255,255,255,0.4);
+  color: $blue;
+  border-radius: 0.5rem;
+}

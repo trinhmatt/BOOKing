@@ -22,6 +22,7 @@ class CreateBookings extends React.Component {
         }
       },
       timesSet: false,
+      isPrevious: false,
       match: props.match,
       user: props.user,
       dispatch: props.dispatch,
@@ -39,8 +40,11 @@ class CreateBookings extends React.Component {
 
     //To display the date and set up the date for the database
     let displayDate = this.state.match.params.year+this.state.match.params.month+this.state.match.params.day
+    const isPrevious = moment().isSame(moment(displayDate), 'day')
     const databaseDate = moment(displayDate).format('YYYYMMMDD')
     displayDate = moment(displayDate).format('dddd, MMMM Do YYYY')
+
+
 
     //Set up initial times based on the operating hours of the user
     while (true) {
@@ -80,7 +84,8 @@ class CreateBookings extends React.Component {
           },
           date: databaseDate
         },
-        displayDate
+        displayDate,
+        isPrevious
       }))
     } else {
       this.setState( (prevState) => ({
@@ -95,13 +100,14 @@ class CreateBookings extends React.Component {
           date: databaseDate
         },
         displayDate,
-        noTimesAvailable: true
+        noTimesAvailable: true,
+        isPrevious
       }))
     }
   }
   setAvailableTimes = () => {
     const availableTimes = this.state.availableTimes.map( (time) => (
-      <div key={time}>
+      <div className='available-times' key={time}>
         <input
           type='radio'
           value={time}
@@ -188,19 +194,19 @@ class CreateBookings extends React.Component {
         bookingDetails += ` (${this.state.booking.client.phoneNumber})`
       }
 
-      // emailjs.send('gmail', 'booking_template', {
-      //   "to_email": this.state.booking.client.email,
-      //   "from_name": this.state.auth.displayName,
-      //   "to_name": this.state.booking.client.name,
-      //   "message_html": this.state.booking.service.time
-      // })
-      //
-      // emailjs.send('gmail', 'new_appointment', {
-      //   "to_email": this.state.auth.email,
-      //   "from_name": this.state.booking.client.name,
-      //   "to_name": this.state.auth.displayName,
-      //   "message_html": bookingDetails
-      // })
+      emailjs.send('gmail', 'booking_template', {
+        "to_email": this.state.booking.client.email,
+        "from_name": this.state.auth.displayName,
+        "to_name": this.state.booking.client.name,
+        "message_html": this.state.booking.service.time
+      })
+
+      emailjs.send('gmail', 'new_appointment', {
+        "to_email": this.state.auth.email,
+        "from_name": this.state.booking.client.name,
+        "to_name": this.state.auth.displayName,
+        "message_html": bookingDetails
+      })
 
       this.state.dispatch(startCreateBooking(this.state.booking, this.state.user.settings.uid)).then( () => {
         this.state.history.push(`/${this.state.user.settings.uid}/confirmation`)
@@ -211,15 +217,67 @@ class CreateBookings extends React.Component {
       this.setState( () => ({error: 'Please select a time'}))
     }
   }
+  changeDay = (e) => {
+    const day = moment(this.state.displayDate, 'dddd, MMMM Do YYYY')
+    let daysToAdd = 1
+    let daysToSubtract = 1
+    let isDateValid = false
+
+    if (e.target.id === 'next-day') {
+      while (!isDateValid) {
+        const nextDay = moment(this.state.displayDate, 'dddd, MMMM Do YYYY').add(daysToAdd, 'day')
+        const nextDayNoDate = nextDay.format('dddd').toLowerCase()
+
+        if (this.state.user.settings.availability[nextDayNoDate]) {
+          const nextDayFormatted = nextDay.format('MMM_DD_YYYY')
+          if (this.state.user.settings.unavailableDays[nextDayFormatted]) {
+            daysToAdd += 1
+          } else {
+            isDateValid = true
+            const uid = this.state.user.settings.uid
+            const year = nextDay.format('YYYY')
+            const month = nextDay.format('MM')
+            const day = nextDay.format('DD')
+            this.state.history.push(`/${uid}/${year}/${month}/${day}/selectservice`)
+          }
+        } else {
+          daysToAdd += 1
+        }
+      }
+    } else {
+      while (!isDateValid) {
+        const previousDay = moment(this.state.displayDate, 'dddd, MMMM Do YYYY').subtract(daysToSubtract, 'day')
+        const previousDayNoDate = previousDay.format('dddd').toLowerCase()
+
+        if (this.state.user.settings.availability[previousDayNoDate]) {
+          const previousDayFormatted = previousDay.format('MMM_DD_YYYY')
+          if (this.state.user.settings.unavailableDays[previousDayFormatted]) {
+            daysToSubtract += 1
+          } else {
+            isDateValid = true
+            const uid = this.state.user.settings.uid
+            const year = previousDay.format('YYYY')
+            const month = previousDay.format('MM')
+            const day = previousDay.format('DD')
+            this.state.history.push(`/${uid}/${year}/${month}/${day}/selectservice`)
+          }
+          } else {
+          daysToSubtract += 1
+          }
+        }
+    }
+  }
   render() {
     return (
       <div>
-        <h1>
+        <h1 style={{paddingTop: 3 + 'vh'}}>
           Bookings for {this.state.displayDate}
         </h1>
+        <button id='previous-day' disabled={this.state.isPrevious} onClick={this.changeDay}>Previous</button>
+        <button id='next-day' onClick={this.changeDay}>Next</button>
         <p>{this.state.error}</p>
         {this.state.noTimesAvailable ? '' : (
-          <form>
+          <form id='client-info'>
             <input
               type='text'
               placeholder='Name'
@@ -244,7 +302,7 @@ class CreateBookings extends React.Component {
           {this.state.timesSet ? this.setAvailableTimes() : ''}
         </form>
         {this.state.noTimesAvailable ? '' : (
-          <button onClick={this.onSubmitBooking}>Submit Booking</button>
+          <button onClick={this.onSubmitBooking} style={{marginBottom: 3 + 'vh'}}>Submit Booking</button>
         )}
       </div>
     )
