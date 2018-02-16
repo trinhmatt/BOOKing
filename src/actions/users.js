@@ -44,10 +44,10 @@ export const startGetSettings = () => {
   }
 }
 
-export const startCreateBooking = (booking, uid) => {
+export const startCreateBooking = (booking, uid, uuid) => {
   return (dispatch) => {
     const databaseBooking = {
-      [booking.service.time]: {
+      [uuid]: {
         ...booking.service,
         client: booking.client
       }
@@ -73,9 +73,9 @@ export const startDisableBookings = (unavailableDays, uid) => {
   }
 }
 
-export const startCancelBooking = (booking, uid) => {
+export const startCancelBooking = (date, uid, bookingID) => {
   return (dispatch) => {
-    return database.ref(`users/${uid}/bookings/${booking.date}/${booking.time}`).remove().then(
+    return database.ref(`users/${uid}/bookings/${date}/${bookingID}`).remove().then(
       () => {
         dispatch(startGetSettings())
       }

@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import uuid from 'uuid'
 import {connect} from 'react-redux'
 import { startCreateBooking } from '../actions/users'
 
@@ -58,10 +59,10 @@ class CreateBookings extends React.Component {
 
     //Filter out the times where bookings have already been created, if any
     if (!!this.state.user.bookings) {
-      for (let bookingTime in this.state.user.bookings[databaseDate]) {
-        const startofBooking = moment(bookingTime, 'HH:mm')
-        const requiredCurrentBookingTime = this.state.user.bookings[databaseDate][bookingTime].service.requiredTime
-        let endOfBooking = moment(bookingTime, 'HH:mm').add(requiredCurrentBookingTime, 'minutes')
+      for (let booking in this.state.user.bookings[databaseDate]) {
+        const startofBooking = moment(this.state.user.bookings[databaseDate][booking].time, 'HH:mm')
+        const requiredCurrentBookingTime = this.state.user.bookings[databaseDate][booking].service.requiredTime
+        let endOfBooking = moment(this.state.user.bookings[databaseDate][booking].time, 'HH:mm').add(requiredCurrentBookingTime, 'minutes')
         availableTimes = availableTimes.filter((time) => {
           return !(
             moment(time, 'HH:mm').isBetween(startofBooking, endOfBooking, 'minute') ||
@@ -182,6 +183,8 @@ class CreateBookings extends React.Component {
         return this.setState( () => ({error: 'Please enter a valid email address'}))
       }
 
+      const bookingID = uuid()
+      const databaseDate = moment(this.state.displayDate, 'dddd, MMMM Do YYYY').format('YYYYMMMDD')
       //message_html for booking_template = the time of the appointment
       //..For new_appointment = Name and email of the client
       //TO DO: Connect the Gmail API to the service
@@ -198,17 +201,20 @@ class CreateBookings extends React.Component {
         "to_email": this.state.booking.client.email,
         "from_name": this.state.auth.displayName,
         "to_name": this.state.booking.client.name,
-        "message_html": this.state.booking.service.time
+        "message_html": this.state.booking.service.time,
+        "booking_id": bookingID,
+        "uid": this.state.user.settings.uid,
+        "date": databaseDate
       })
 
-      emailjs.send('gmail', 'new_appointment', {
-        "to_email": this.state.auth.email,
-        "from_name": this.state.booking.client.name,
-        "to_name": this.state.auth.displayName,
-        "message_html": bookingDetails
-      })
+      // emailjs.send('gmail', 'new_appointment', {
+      //   "to_email": this.state.auth.email,
+      //   "from_name": this.state.booking.client.name,
+      //   "to_name": this.state.auth.displayName,
+      //   "message_html": bookingDetails
+      // })
 
-      this.state.dispatch(startCreateBooking(this.state.booking, this.state.user.settings.uid)).then( () => {
+      this.state.dispatch(startCreateBooking(this.state.booking, this.state.user.settings.uid, bookingID)).then( () => {
         this.state.history.push(`/${this.state.user.settings.uid}/confirmation`)
       })
     } else if (!this.state.booking.client.email || !this.state.booking.client.name){

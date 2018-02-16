@@ -27,22 +27,22 @@ class MyBookingsDisplay extends React.Component {
   componentDidMount() {
     let allBookings = [];
 
-    for (let time in this.state.booking) {
+    for (let bookingID in this.state.booking) {
       const bookingJSX = (
-        <div key={time} id='booking-time'>
-          <h2>{time}</h2>
-          <button id={time} onClick={this.openModal}>Cancel Booking</button>
+        <div key={bookingID} id='booking-time'>
+          <h2>{this.state.booking[bookingID].time}</h2>
+          <button id={bookingID} onClick={this.openModal}>Cancel Booking</button>
           <p>
-            Service: {this.state.booking[time].service.service}
+            Service: {this.state.booking[bookingID].service.service}
           </p>
           <p>
-            Client Name: {this.state.booking[time].client.name}
+            Client Name: {this.state.booking[bookingID].client.name}
 
-            {this.state.booking[time].client.phoneNumber}
+            {this.state.booking[bookingID].client.phoneNumber}
           </p>
-          <p>Client Email: {this.state.booking[time].client.email}</p>
-          {this.state.booking[time].client.phoneNumber ?
-            <p>Client Phone Number: {this.state.booking[time].client.phoneNumber}</p> :
+          <p>Client Email: {this.state.booking[bookingID].client.email}</p>
+          {this.state.booking[bookingID].client.phoneNumber ?
+            <p>Client Phone Number: {this.state.booking[bookingID].client.phoneNumber}</p> :
             ''
           }
         </div>
@@ -53,12 +53,13 @@ class MyBookingsDisplay extends React.Component {
     this.setState( () => ({allBookings}))
   }
   openModal = (e) => {
-    const time = e.target.id
-    const booking = this.state.booking[time]
+    const bookingID = e.target.id
+    const booking = this.state.booking[bookingID]
     const modalInfo = {
       client: booking.client.name,
       email: booking.client.email,
-      time
+      time: booking.time,
+      bookingID
     }
 
     this.setState( () => ({modalInfo, isModalOpen: true}))
@@ -67,10 +68,9 @@ class MyBookingsDisplay extends React.Component {
     this.setState( () => ({isModalOpen: false}))
   }
   confirmCancel = () => {
-    const booking = {
-      date: moment(this.state.date, 'MMM Do, YYYY').format('YYYYMMMDD'),
-      time: this.state.modalInfo.time
-    }
+    const date = moment(this.state.date, 'MMM Do, YYYY').format('YYYYMMMDD')
+    const bookingID = this.state.modalInfo.bookingID
+
 
     // emailjs.send('gmail', 'cancel_confirmation', {
     //   "to_email": this.state.modalInfo.email,
@@ -79,8 +79,8 @@ class MyBookingsDisplay extends React.Component {
     //   "cancel_date": this.state.date
     // })
 
-    this.state.dispatch(startCancelBooking(booking, this.state.uid))
-    this.state.history.push(`/${this.state.uid}/bookings/cancel`)
+    this.state.dispatch(startCancelBooking(date, this.state.uid, bookingID))
+    this.state.history.push(`/${this.state.uid}/bookings/cancelconfirmation`)
 
   }
   render() {
