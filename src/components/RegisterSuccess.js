@@ -106,7 +106,8 @@ class RegisterSuccess extends React.Component {
       endTime: this.state.endTime,
       availability: this.state.weeklyAvailability,
       services: this.state.services,
-      displayName: this.state.user.displayName
+      displayName: this.state.user.displayName,
+      email: this.state.user.email
     }
     this.state.dispatch(startSetServices(services)).then( () => {
       this.state.history.push(`/${this.state.user.uid}/dashboard`)
