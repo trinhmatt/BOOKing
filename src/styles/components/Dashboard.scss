@@ -22,3 +22,10 @@
   height: 2px;
   margin-top: 2vh;
 }
+
+@media only screen and (max-width: 850px) {
+  .dashboard h1 {
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+  }
+}

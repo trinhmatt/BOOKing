@@ -1,0 +1,33 @@
+#settings-container {
+  width: 60%;
+  margin: 5% auto;
+  background: $blue;
+  height: 80vh;
+  text-align: center;
+  border-radius: 1em;
+}
+
+#settings-container h1 {
+  padding: 2%;
+}
+#settings-title-break {
+  height: 2px;
+  background-color: white;
+  width: 100%;
+}
+
+#settings-container button {
+  display: block;
+  margin: 2% auto;
+  background: white;
+  outline: none;
+  border: none;
+  border-radius: 1em;
+  padding: 2%;
+  width: 50%;
+  color: $blue;
+}
+
+#settings-container button:hover {
+  background-color: $light-grey;
+}

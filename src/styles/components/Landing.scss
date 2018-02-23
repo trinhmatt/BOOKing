@@ -7,8 +7,8 @@
 
 #icon {
   background-image: url('https://i.imgur.com/Z5lGabz.png');
-  background-repeat: no-repeat;
-  background-size: contain;
+  background-repeat: repeat-y;
+  background-size: cover;
   background-color: $blue;
   height: 50vh;
   width: 50vh;
@@ -35,9 +35,9 @@
 
 #site-info {
   margin: 0;
-  height: 45vh;
+  min-height: 45vh;
   background-image: url('https://i.imgur.com/HHWzJwm.jpg');
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   background-size: cover;
   background-position-y: -22vw;
 }
@@ -59,7 +59,7 @@
 }
 
 #site-features-container {
-  height: 90vh;
+  min-height: 90vh;
   background-color: $blue;
 }
 
@@ -117,4 +117,34 @@
   border: 1px solid white;
   border-radius: 0.5rem;
   color: white;
+}
+
+@media only screen and (max-width: 850px) {
+  #title-slogan {
+    width: 80%;
+  }
+
+  #icon {
+    height: 30vh;
+    width: 65vw;
+    margin-bottom: 2%;
+  }
+
+  #site-info-text {
+    margin-left: 15%;
+  }
+
+  #features-calendar {
+    display: none;
+  }
+
+  #site-features {
+    padding-top: 0;
+    padding-bottom: 15%;
+    margin-left: 5%;
+  }
+
+  .site-feature {
+    margin-left: 0;
+  }
 }

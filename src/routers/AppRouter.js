@@ -17,6 +17,8 @@ import SetAvailability from '../components/SetAvailability'
 import SetAvailabilitySuccess from '../components/SetAvailabilitySuccess'
 import CancelConfirmation from '../components/CancelConfirmation'
 import PublicCancel from '../components/PublicCancel'
+import UpdateUserForm from  '../components/UpdateUserForm'
+import ChangeConfirm from '../components/ChangeConfirm'
 
 
 export const history = createHistory();
@@ -38,6 +40,9 @@ const AppRouter = () => (
         <PrivateRoute path='/:uid/settings' component={Settings} exact={true} />
         <PrivateRoute path='/:uid/settings/availability' component={SetAvailability} exact={true} />
         <PrivateRoute path='/:uid/settings/availability/success' component={SetAvailabilitySuccess} />
+        <PrivateRoute path='/:uid/settings/changepassword' component={UpdateUserForm} />
+        <PrivateRoute path='/:uid/settings/changeusername' component={UpdateUserForm} />
+        <PrivateRoute path='/:uid/settings/changeconfirm' component={ChangeConfirm} />
         <Redirect from='/redirect' to='/' />
       </Switch>
     </div>
