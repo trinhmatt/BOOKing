@@ -1,0 +1,70 @@
+#register-success-container {
+  width: 80%;
+  margin: 5% auto;
+  text-align: center;
+  background-color: $blue;
+  border-radius: 1em;
+  padding: 2em;
+}
+
+#register-success-container button {
+  background: $off-white;
+  border-radius: 0.5em;
+  outline: none;
+  border: 1px solid $blue;
+  color: $blue;
+  padding: 0.5em;
+}
+
+#register-success-container button:hover {
+  background: $blue;
+  border-radius: 0.5em;
+  border: 1px solid white;
+  color: white;
+}
+
+#operating-hours {
+  text-align: left;
+  margin-left: 25%;
+}
+
+#operating-hours form {
+  margin-top: 2vh;
+  margin-left: 5%;
+}
+
+#weekly-availability {
+  text-align: left;
+  margin-left: 25%;
+}
+
+#weekly-availability form {
+  margin-top: 2vh;
+  margin-left: 5%;
+}
+
+#services-offered {
+  text-align: left;
+  margin-left: 25%;
+}
+
+#services-offered button {
+  margin-top: 2vh;
+}
+
+#services-offered input {
+  background-color: $medium-grey;
+  outline: none;
+  border: 1px solid $blue;
+  padding: 1em;
+  width: 50%;
+  border-radius: 0.5em;
+}
+
+#services-offered input:hover {
+  background-color: $off-white;
+}
+
+#services-offered input:focus {
+  background-color: white;
+}

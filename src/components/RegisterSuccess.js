@@ -115,103 +115,131 @@ class RegisterSuccess extends React.Component {
   }
   render() {
     return (
-      <div>
-        <h1>Welcome {this.state.user.displayName}</h1>
-        <form>
-          <h3>Please specify your operating hours (24h)</h3>
-          <select value={this.state.startTime} onChange={this.onStartChange}>
-            <option value='0'>Midnight</option>
-            <option value='1'>1:00</option>
-            <option value='2'>2:00</option>
-            <option value='3'>3:00</option>
-            <option value='4'>4:00</option>
-            <option value='5'>5:00</option>
-            <option value='6'>6:00</option>
-            <option value='7'>7:00</option>
-            <option value='8'>8:00</option>
-            <option value='9'>9:00</option>
-            <option value='10'>10:00</option>
-            <option value='11'>11:00</option>
-          </select>
-          <label>AM</label>
-          <select value={this.state.endTime} onChange={this.onEndChange}>
-            <option value='12'>Noon</option>
-            <option value='13'>1:00</option>
-            <option value='14'>2:00</option>
-            <option value='15'>3:00</option>
-            <option value='16'>4:00</option>
-            <option value='17'>5:00</option>
-            <option value='18'>6:00</option>
-            <option value='19'>7:00</option>
-            <option value='20'>8:00</option>
-            <option value='21'>9:00</option>
-            <option value='22'>10:00</option>
-            <option value='23'>11:00</option>
-          </select>
-          <label>PM</label>
-        </form>
-        <div>
-          <h3>Please specify your weekly availability</h3>
-          <input
-            type='checkbox'
-            id='sunday'
-            onClick={this.onDayClick}
-          />
-          <label>Sunday</label>
-          <input
-            type='checkbox'
-            id='monday'
-            onClick={this.onDayClick}
-          />
-          <label>Monday</label>
-          <input
-            type='checkbox'
-            id='tuesday'
-            onClick={this.onDayClick}
-          />
-          <label>Tuesday</label>
-          <input
-            type='checkbox'
-            id='wednesday'
-            onClick={this.onDayClick}
-          />
-          <label>Wednesday</label>
-          <input
-            type='checkbox'
-            id='thursday'
-            onClick={this.onDayClick}
-          />
-          <label>Thursday</label>
-          <input
-            type='checkbox'
-            id='friday'
-            onClick={this.onDayClick}
-          />
-          <label>Friday</label>
-          <input
-            type='checkbox'
-            id='saturday'
-            onClick={this.onDayClick}
-          />
-          <label>Saturday</label>
+      <div id='register-success-container'>
+        <div id='register-success-header'>
+          <h1>Welcome {this.state.user.displayName}</h1>
+          <br></br>
+          <h1>Here's what you need to do to get started.</h1>
         </div>
-        <form>
-          <h3>Please list the services you offer and their estimated completion time (in minutes)</h3>
-          {this.state.nServices ? this.generateServicesInput() : ''}
-        </form>
-        <button onClick={() => {
-          this.setState((prevState) => {
-            const service = {
-              service: '',
-              requiredTime: '0'
-            }
-            return {
-              nServices: prevState.nServices + 1,
-              services: [...prevState.services, service]
-            }
-          })
-        }}>Add Service</button>
-        <button onClick={ () => {
+        <br></br>
+        <div id='operating-hours'>
+          <h1>1. Set your operating hours</h1>
+          <form>
+            <select value={this.state.startTime} onChange={this.onStartChange}>
+              <option value='0'>Midnight</option>
+              <option value='1'>1:00</option>
+              <option value='2'>2:00</option>
+              <option value='3'>3:00</option>
+              <option value='4'>4:00</option>
+              <option value='5'>5:00</option>
+              <option value='6'>6:00</option>
+              <option value='7'>7:00</option>
+              <option value='8'>8:00</option>
+              <option value='9'>9:00</option>
+              <option value='10'>10:00</option>
+              <option value='11'>11:00</option>
+            </select>
+            <label> AM</label>
+            <br></br>
+            <select value={this.state.endTime} onChange={this.onEndChange}>
+              <option value='12'>Noon</option>
+              <option value='13'>1:00</option>
+              <option value='14'>2:00</option>
+              <option value='15'>3:00</option>
+              <option value='16'>4:00</option>
+              <option value='17'>5:00</option>
+              <option value='18'>6:00</option>
+              <option value='19'>7:00</option>
+              <option value='20'>8:00</option>
+              <option value='21'>9:00</option>
+              <option value='22'>10:00</option>
+              <option value='23'>11:00</option>
+            </select>
+            <label> PM</label>
+          </form>
+        </div>
+        <br></br>
+        <div id='weekly-availability'>
+          <h1>2. Set your weekly availability</h1>
+          <form>
+            <div>
+              <input
+                type='checkbox'
+                id='sunday'
+                onClick={this.onDayClick}
+              />
+              <label>Sunday</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='monday'
+                onClick={this.onDayClick}
+              />
+              <label>Monday</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='tuesday'
+                onClick={this.onDayClick}
+              />
+              <label>Tuesday</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='wednesday'
+                onClick={this.onDayClick}
+              />
+              <label>Wednesday</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='thursday'
+                onClick={this.onDayClick}
+              />
+              <label>Thursday</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='friday'
+                onClick={this.onDayClick}
+              />
+              <label>Friday</label>
+            </div>
+            <div>
+              <input
+                type='checkbox'
+                id='saturday'
+                onClick={this.onDayClick}
+              />
+              <label>Saturday</label>
+            </div>
+          </form>
+        </div>
+        <br></br>
+        <div id='services-offered'>
+          <form>
+            <h1>3. Set the services you offer and their estimated completion time (in minutes)</h1>
+            {this.state.nServices ? this.generateServicesInput() : ''}
+          </form>
+          <button onClick={() => {
+            this.setState((prevState) => {
+              const service = {
+                service: '',
+                requiredTime: ''
+              }
+              return {
+                nServices: prevState.nServices + 1,
+                services: [...prevState.services, service]
+              }
+            })
+          }}>Add Service</button>
+        </div>
+        <button style={{marginTop: 5 + '%'}}onClick={ () => {
           this.submitUserSettings()
         }}>Submit</button>
       </div>
