@@ -122,7 +122,6 @@ class CreateBookings extends React.Component {
       return (
         <div>
           <h2>There are no available times today</h2>
-          <p>Please return to the dashboard to select a new time.</p>
         </div>
       )
     } else {
@@ -197,15 +196,15 @@ class CreateBookings extends React.Component {
         bookingDetails += ` (${this.state.booking.client.phoneNumber})`
       }
 
-      emailjs.send('gmail', 'booking_template', {
-        "to_email": this.state.booking.client.email,
-        "from_name": this.state.auth.displayName,
-        "to_name": this.state.booking.client.name,
-        "message_html": this.state.booking.service.time,
-        "booking_id": bookingID,
-        "uid": this.state.user.settings.uid,
-        "date": databaseDate
-      })
+      // emailjs.send('gmail', 'booking_template', {
+      //   "to_email": this.state.booking.client.email,
+      //   "from_name": this.state.auth.displayName,
+      //   "to_name": this.state.booking.client.name,
+      //   "message_html": this.state.booking.service.time,
+      //   "booking_id": bookingID,
+      //   "uid": this.state.user.settings.uid,
+      //   "date": databaseDate
+      // })
 
       // emailjs.send('gmail', 'new_appointment', {
       //   "to_email": this.state.auth.email,

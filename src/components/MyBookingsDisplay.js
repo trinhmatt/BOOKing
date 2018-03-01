@@ -85,20 +85,22 @@ class MyBookingsDisplay extends React.Component {
   }
   render() {
     return (
-      <div id='booking-date'>
-        <h1 id='booking-date-h1'>{this.state.date}</h1>
-        {this.state.allBookings}
-        <Modal
-          isOpen={this.state.isModalOpen}
-          onRequestClose={this.closeModal}
-          contentLabel="Modal"
-        >
-          <h1>
-            Confirm appointment cancellation with {this.state.modalInfo.client} at {this.state.modalInfo.time}?
-          </h1>
-          <button onClick={this.confirmCancel}>Confirm</button>
-          <button onClick={this.closeModal}>Close Window</button>
-        </Modal>
+      <div id='booking-date-container'>
+        <div id='booking-date'>
+          <h1 id='booking-date-h1'>{this.state.date}</h1>
+          {this.state.allBookings}
+          <Modal
+            isOpen={this.state.isModalOpen}
+            onRequestClose={this.closeModal}
+            contentLabel="Modal"
+          >
+            <h1>
+              Confirm appointment cancellation with {this.state.modalInfo.client} at {this.state.modalInfo.time}?
+            </h1>
+            <button onClick={this.confirmCancel}>Confirm</button>
+            <button onClick={this.closeModal}>Close Window</button>
+          </Modal>
+        </div>
       </div>
     )
   }

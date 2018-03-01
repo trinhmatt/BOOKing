@@ -23,7 +23,7 @@ class MyBookings extends React.Component {
   }
   componentDidMount() {
     this.setUpBookings();
-    this.filterBookings();
+
   }
   setUpBookings = () => {
     let bookingsDict = [];
@@ -55,9 +55,8 @@ class MyBookings extends React.Component {
         />)
       )
     }
-    //So the most recent bookings appear first if the user opts to display all bookings
-    bookingsToRender.reverse()
-    this.setState( () => ({bookingsDict, bookingsToRender, noBookings: false}))
+
+    this.setState( (() => ({bookingsDict, bookingsToRender, noBookings: false})), this.onDateChange(this.state.selectedDate))
   }
   onDateChange = (date) => {
     if (date) {
@@ -68,7 +67,6 @@ class MyBookings extends React.Component {
       this.setState( () => ({selectedDate: dictDate, calendarDate}), this.filterBookings)
     } else {
       this.setState( () => ({calendarDate: null}))
-      this.setUpBookings()
     }
   }
   onFocusChange = ({ focused }) => {
@@ -79,9 +77,9 @@ class MyBookings extends React.Component {
       return !!(date[this.state.selectedDate])
     })
 
-    if (!!filteredDict[0]) {
+    if (filteredDict[0]) {
       const bookingsToRender = [(filteredDict[0][this.state.selectedDate])]
-
+      
       this.setState( () => ({bookingsToRender, noBookings: false}))
     } else {
       const bookingsToRender = []
@@ -100,7 +98,6 @@ class MyBookings extends React.Component {
         <h2>Filter by date: </h2>
         <SingleDatePicker
           date={this.state.calendarDate}
-          showClearDate={true}
           onDateChange={this.onDateChange}
           focused={this.state.calendarFocused}
           onFocusChange={this.onFocusChange}
