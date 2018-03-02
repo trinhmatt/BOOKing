@@ -89,7 +89,7 @@ class UpdateUserForm extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div id='update-user-form'>
         {this.state.error}
         <form onSubmit={this.onChangeSubmit}>
           <input

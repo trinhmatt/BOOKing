@@ -82,10 +82,10 @@ class SetAvailability extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div id='set-availability-container'>
         <h1>Set Availability</h1>
         <p>Please select an option to disable bookings on one or multiple days.</p>
-        <div>
+        <div className='availability-button'>
           <button id='oneDay' onClick={this.showCalendar}>Disable bookings for 1 day</button>
           <button id='multipleDays' onClick={this.showCalendar}>Disable bookings for more than 1 day</button>
         </div>
@@ -115,7 +115,9 @@ class SetAvailability extends React.Component {
             />
           </div>
         ) : ''}
-        <button onClick={this.confirmAvailability}>Confirm availability</button>
+        <div className='availability-button'>
+          <button onClick={this.confirmAvailability}>Confirm availability</button>
+        </div>
       </div>
     )
   }

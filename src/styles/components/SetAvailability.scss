@@ -1,0 +1,24 @@
+#set-availability-container {
+  width: 80%;
+  margin: 10% auto;
+  text-align: center;
+  background: $blue;
+  border-radius: 1em;
+  padding: 5%;
+}
+
+#set-availability-container .availability-button button {
+  background: white;
+  border: 1px solid $blue;
+  outline: none;
+  color: $blue;
+  padding: 2%;
+  margin-top: 2%;
+  border-radius: 1em;
+}
+
+#set-availability-container .availability-button button:hover {
+  background: $blue;
+  border: 1px solid white;
+  color: white;
+}

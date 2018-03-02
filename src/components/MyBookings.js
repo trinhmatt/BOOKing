@@ -79,7 +79,7 @@ class MyBookings extends React.Component {
 
     if (filteredDict[0]) {
       const bookingsToRender = [(filteredDict[0][this.state.selectedDate])]
-      
+
       this.setState( () => ({bookingsToRender, noBookings: false}))
     } else {
       const bookingsToRender = []
@@ -94,19 +94,21 @@ class MyBookings extends React.Component {
   render() {
     return (
       <div id='my-bookings'>
-        <h1>My Bookings</h1>
-        <h2>Filter by date: </h2>
-        <SingleDatePicker
-          date={this.state.calendarDate}
-          onDateChange={this.onDateChange}
-          focused={this.state.calendarFocused}
-          onFocusChange={this.onFocusChange}
-          numberOfMonths={1}
-          isOutsideRange={() => false}
-        />
+        <div id='my-bookings-header'>
+          <h1>My Bookings</h1>
+          <h2>Filter by date: </h2>
+          <SingleDatePicker
+            date={this.state.calendarDate}
+            onDateChange={this.onDateChange}
+            focused={this.state.calendarFocused}
+            onFocusChange={this.onFocusChange}
+            numberOfMonths={1}
+            isOutsideRange={() => false}
+          />
+        </div>
         {this.state.bookingsToRender}
         {this.state.noBookings ? (
-          <h2>
+          <h2 style={{textAlign: 'center'}}>
             You have no bookings for {moment(this.state.calendarDate).format('MMMM Do, YYYY')}
           </h2>
         ) : ''}

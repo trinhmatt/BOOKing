@@ -1,0 +1,40 @@
+#update-user-form {
+  width: 70%;
+  background: $blue;
+  margin: 10% auto;
+  border-radius: 1em;
+  text-align: center;
+  padding: 5%;
+}
+
+#update-user-form input {
+  display: grid;
+  margin: 0 auto;
+  background: $medium-grey;
+  padding: 3%;
+  outline: none;
+  border: 1px solid $blue;
+  border-radius: 1em;
+  width: 70%;
+  margin-top: 1%;
+}
+
+#update-user-form input:focus {
+  background: $off-white;
+}
+
+#update-user-form button {
+  background: white;
+  border: 1px solid $blue;
+  outline: none;
+  color: $blue;
+  padding: 2%;
+  margin-top: 2%;
+  border-radius: 1em;
+}
+
+#update-user-form button:hover {
+  background: $blue;
+  border: 1px solid white;
+  color: white;
+}
