@@ -1,12 +1,7 @@
 Made to practice using React+Redux with 3rd party API (Google Calendar)
 
 
-When finished:
-
-  -Users should be able to view and mangage their bookings
-
-
-  -Clients should be able to create bookings and receive email confirmation
+After finishing I learnt that props can be accessed using 'this' instead of binding props to state...
 
 
 http://trinh-booking.herokuapp.com/
